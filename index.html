@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="legal-modal.css" />
     <link rel="icon" href="favicon.ico" />
 </head>
 
@@ -187,8 +188,8 @@
                 </div>
                 <div class="footer-divider" aria-hidden="true"></div>
                 <nav class="footer-links" aria-label="קישורים משפטיים ויצירת קשר">
-                    <a class="footer-link" href="/privacy">מדיניות פרטיות</a>
-                    <a class="footer-link" href="/terms">תנאי שירות</a>
+                    <button class="footer-link" type="button" data-legal-modal="privacy-he.json">מדיניות פרטיות</button>
+                    <button class="footer-link" type="button" data-legal-modal="terms-he.json">תנאי שירות</button>
                     <a class="footer-link" href="mailto:info@tinytaleapp.com">צרו קשר</a>
                     <!-- <a class="footer-link" href="/blog">בלוג</a> -->
                 </nav>
@@ -199,10 +200,26 @@
             </div>
         </section>
     </div>
+
+    <dialog class="legal-modal" id="legal-modal" aria-labelledby="legal-modal-title">
+        <div class="legal-modal__panel">
+            <header class="legal-modal__header">
+                <h2 class="legal-modal__title" id="legal-modal-title"></h2>
+                <button class="legal-modal__close" type="button" aria-label="סגירה">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </header>
+            <div class="legal-modal__body"></div>
+        </div>
+    </dialog>
+
     <script src="magic-highlight.js"></script>
     <script src="authors-marquee.js"></script>
     <script src="reviews-carousel.js"></script>
     <script src="header.js"></script>
+    <script src="legal-modal.js"></script>
 </body>
 
 </html>
