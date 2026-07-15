@@ -199,7 +199,7 @@ body {
   height: auto;
   object-fit: contain;
   object-position: center;
-  transform: translate(-50%, -50%) scale(1.35);
+  transform: translate(-50%, -50%) scale(1.17);
 }
 
 .hero-logo {
@@ -1259,7 +1259,7 @@ body {
   .hero-image {
     width: auto;
     height: 145%;
-    transform: translate(-50%, -50%) scale(1.4);
+    transform: translate(-50%, -50%) scale(1.3);
   }
 
   .reading-content {
@@ -1317,7 +1317,7 @@ body {
 
   .hero-image {
     height: 155%;
-    transform: translate(-50%, -50%) scale(1.5);
+    transform: translate(-50%, -50%) scale(1.32);
   }
 
   .reading-content {
@@ -1354,7 +1354,7 @@ body {
 
   .hero-image {
     height: 160%;
-    transform: translate(-50%, -50%) scale(1.55);
+    transform: translate(-50%, -50%) scale(1.42);
   }
 
   .reading-content {
@@ -1372,6 +1372,6 @@ body {
 
 @media (min-width: 1440px) and (max-width: 1599px) {
   .hero-image {
-    transform: translate(-57%, -50%) scale(1.55);
+    transform: translate(-57%, -50%) scale(1.42);
   }
 }
