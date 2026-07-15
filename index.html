@@ -20,24 +20,27 @@
         <header class="header">
             <img class="logo" src="inline-logo-only-text.png" alt="TinyTale" />
             <nav class="header-nav">
-                <a class="header-link header-link--desktop" href="/blog">בלוג</a>
-                <a class="cta-button" href="/app">נסו בחינם</a>
+                <a class="header-link header-link--desktop" href="/blog" hidden>בלוג</a>
+                <a class="cta-button" href="https://tinytaleapp.com">נסו בחינם</a>
                 <button class="header-menu-button" type="button" aria-label="תפריט" aria-expanded="false"
-                    aria-controls="header-menu">
+                    aria-controls="header-menu" hidden>
                     <svg width="28" height="23" viewBox="0 0 28 23" fill="none" aria-hidden="true">
                         <path d="M27 1.25H2M27 11.25H2M27 21.25H2" stroke="#2E2A42" stroke-width="1.975"
                             stroke-linecap="round"></path>
                     </svg>
                 </button>
                 <div class="header-menu" id="header-menu" hidden>
-                    <a class="header-link" href="/blog">בלוג</a>
+                    <a class="header-link" href="/blog" hidden>בלוג</a>
                 </div>
             </nav>
         </header>
 
         <section class="hero content">
             <div class="hero-text">
-                <img class="hero-logo" src="column-logo.png" alt="TinyTale" />
+                <picture>
+                    <source media="(max-width: 899px)" srcset="tinytale-only-icon.png" />
+                    <img class="hero-logo" src="column-logo.png" alt="TinyTale" />
+                </picture>
                 <div class="hero-titles">
                     <h1 class="hero-title">
                         <span class="magic-highlight-text">
@@ -57,7 +60,7 @@
                     מרגשת
                     ומלמדת, שבה הילדים הופכים לחלק טבעי מהסיפור ומהעולם האמנותי המקורי שלהם
                 </p>
-                <a class="cta-button hero-cta-button" href="/app">נסו עכשיו בחינם</a>
+                <a class="cta-button hero-cta-button" href="https://tinytaleapp.com">נסו עכשיו בחינם</a>
             </div>
             <div class="hero-images">
                 <img class="hero-image" src="final-hero2.png" alt="תצוגה מקדימה של אפליקציית TinyTale" />

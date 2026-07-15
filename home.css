@@ -118,6 +118,11 @@ body {
   display: none;
 }
 
+.header-link[hidden],
+.header-menu-button[hidden] {
+  display: none;
+}
+
 .header-menu .header-link {
   font-size: 1.125rem;
 }
@@ -1096,6 +1101,30 @@ body {
 @media (max-width: 899px) {
   .reading-visual {
     order: -1;
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 7.5vw, 3rem);
+  }
+
+  .hero {
+    gap: 2rem;
+  }
+
+  .hero-text {
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .hero-logo {
+    align-self: center;
+    height: clamp(6rem, 12vw, 6rem);
+    margin-top: 0.5rem;
+  }
+
+  .hero-cta-button {
+    align-self: center;
   }
 
   .hero-description {
