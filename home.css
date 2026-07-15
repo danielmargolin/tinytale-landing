@@ -665,11 +665,17 @@ body {
   margin-top: 0.25rem;
 }
 
+.newsletter-form__field {
+  position: relative;
+  width: 100%;
+}
+
 .newsletter-form__input {
   width: 100%;
   padding: 0.9375rem 1.125rem;
+  padding-left: 7rem;
   border: 1px solid rgba(80, 77, 242, 0.18);
-  border-radius: 0.875rem;
+  border-radius: 999px;
   background-color: #ffffff;
   color: #131313;
   font-family: inherit;
@@ -692,9 +698,20 @@ body {
 }
 
 .newsletter-form__button {
-  align-self: flex-start;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  bottom: 5px;
+  padding: 0 1.5rem;
   border: none;
+  border-radius: 999px;
+  box-shadow: none;
   cursor: pointer;
+}
+
+.newsletter-form__button:active {
+  transform: none;
+  box-shadow: none;
 }
 
 .footer-links {
