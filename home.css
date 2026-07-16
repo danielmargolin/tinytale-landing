@@ -189,6 +189,10 @@ body {
   pointer-events: none;
 }
 
+.hero-images picture {
+  display: contents;
+}
+
 .hero-image {
   position: absolute;
   left: 50%;
