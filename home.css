@@ -1051,6 +1051,7 @@ body {
   display: flex;
   align-items: center;
   height: 80px;
+  margin-top: clamp(1rem, 2.5vw, 2rem);
   overflow: hidden;
   direction: ltr;
   position: relative;
@@ -1163,13 +1164,28 @@ body {
     width: 200%;
     top: 65%;
   }
+
+  .authors-marquee {
+    margin-top: clamp(6rem, 22vw, 9rem);
+  }
+
+  .gradient-section {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+  }
+
+  .reading-section {
+    padding-top: 0rem;
+    padding-bottom: 5rem;
+  }
+
   .floating-tag--1 {
-    top: 8%;
+    top: 0%;
     right: 6%;
   }
 
   .floating-tag--2 {
-    top: 30%;
+    top: 25%;
     left: 7%;
   }
 
@@ -1184,7 +1200,7 @@ body {
   }
 
   .floating-tag--5 {
-    top: 17%;
+    top: 10%;
     right: 6%;
     max-width: clamp(14rem, 27vw, 20rem);
   }
