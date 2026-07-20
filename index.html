@@ -51,10 +51,10 @@
 
         <section class="hero content">
             <div class="hero-text">
-                <picture>
-                    <source media="(max-width: 899px)" srcset="tinytale-only-icon.png" />
-                    <img class="hero-logo" src="column-logo.png" alt="TinyTale" />
-                </picture>
+                <lottie-player id="hero-lottie" class="hero-logo hero-logo--lottie" src="tiny-tale-loading.json"
+                    background="transparent" speed="1" autoplay direction="1" mode="normal" aria-label="TinyTale">
+                </lottie-player>
+                <img class="hero-logo hero-logo--desktop" src="column-logo.png" alt="TinyTale" />
                 <div class="hero-titles">
                     <h1 class="hero-title">
                         <span class="magic-highlight-text">
@@ -250,6 +250,13 @@
     <script src="header.js"></script>
     <script src="legal-modal.js"></script>
     <script src="cookie-consent.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script>
+        const heroLottie = document.getElementById("hero-lottie");
+        heroLottie.addEventListener("ready", () => {
+            heroLottie.getLottie().playSegments([20, 110], true);
+        });
+    </script>
 </body>
 
 </html>

@@ -212,6 +212,10 @@ body {
   align-self: flex-start;
 }
 
+.hero-logo--lottie {
+  display: none;
+}
+
 .hero-titles {
   display: flex;
   flex-direction: column;
@@ -355,7 +359,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  text-align: right;
+  align-items: center;
 }
 
 .reading-text .section-title {
@@ -1150,6 +1154,18 @@ body {
     align-self: center;
     height: clamp(6rem, 12vw, 6rem);
     margin-top: 0.5rem;
+  }
+
+  .hero-logo--lottie {
+    display: block;
+    width: clamp(9rem, 36vw, 12rem);
+    height: clamp(9rem, 36vw, 12rem);
+    /* Cancel .hero-text gap so the Lottie sits flush against the titles */
+    margin-bottom: -1rem;
+  }
+
+  .hero-logo--desktop {
+    display: none;
   }
 
   .hero-cta-button {
