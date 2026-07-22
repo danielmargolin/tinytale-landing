@@ -609,7 +609,7 @@ body {
 
 .how-section .section-title {
   margin: 0;
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
   font-weight: 700;
 }
 
