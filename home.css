@@ -886,21 +886,37 @@ body {
 
 .floating-tag {
   position: absolute;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  gap: 0.4em;
   margin: 0;
   /* max-width: clamp(9rem, 18vw, 14rem); */
   max-width: clamp(12rem, 24vw, 18rem);
   padding: 0.75rem 1.125rem;
+  border: none;
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.82);
   /* box-shadow: 0 4px 20px rgba(80, 77, 242, 0.1); */
   box-shadow:
     0 4px 6px -1px #0000001a,
     0 2px 4px -2px #0000001a;
+  font-family: inherit;
   font-size: clamp(0.9rem, 1.2vw, 1rem);
   font-weight: 500;
   line-height: 1.45;
   text-align: right;
   color: #2b2b6e;
+}
+
+.floating-tag::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 2.35em;
+  font-weight: 300;
+  line-height: 1;
+  color: #504df2;
 }
 
 .floating-tag--1 {
