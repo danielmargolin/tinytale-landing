@@ -958,6 +958,7 @@ body {
 .floating-tag--8 {
   top: 62%;
   right: 14%;
+  max-width: clamp(14rem, 27vw, 20rem);
 }
 
 @keyframes cloud-drift-a {
@@ -1329,15 +1330,17 @@ body {
   .floating-tag--6 {
     top: 70%;
     left: 7%;
+    max-width: clamp(14rem, 27vw, 20rem);
   }
 
   .floating-tag--7 {
     top: 79%;
-    left: 43%;
+    left: 38%;
+    max-width: clamp(14rem, 27vw, 20rem);
   }
 
   .floating-tag--8 {
-    top: 61%;
+    top: 59%;
     right: 6%;
   }
   .review-card {
