@@ -696,6 +696,36 @@ body {
   border: 0;
 }
 
+.book-demo-section {
+  gap: clamp(2rem, 4vw, 3rem);
+  padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 5vw, 6rem);
+  background-color: #ffffff;
+}
+
+.book-demo-section__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-demo-section__header .section-title {
+  margin-bottom: 0.75rem;
+}
+
+.book-demo-frame {
+  width: min(100%, 72rem);
+  height: clamp(32rem, 76vw, 54rem);
+  overflow: hidden;
+  background: transparent;
+}
+
+.book-demo-frame__iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .footer-section {
   padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 10rem);
   align-items: stretch;
