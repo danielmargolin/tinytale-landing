@@ -1,26 +1,26 @@
 [
   {
-    "cover": "books/dr-tomer.jpg",
+    "cover": "books/compress/dr-tomer.jpg",
     "author": "ד״ר תומר ליפשיץ מאיר ונעמה ליפשיץ מאיר",
     "description": ""
   },
   {
-    "cover": "books/fun-to-sleep.jpg",
+    "cover": "books/compress/fun-to-sleep.jpg",
     "author": "רינה ברוש",
     "description": ""
   },
   {
-    "cover": "books/tigi.jpg",
+    "cover": "books/compress/tigi.jpg",
     "author": "ספר הבית",
     "description": ""
   },
   {
-    "cover": "books/clean_plate.jpg",
+    "cover": "books/compress/clean_plate.jpg",
     "author": "ספר הבית",
     "description": ""
   },
   {
-    "cover": "books/confused-bite.jpg",
+    "cover": "books/compress/confused-bite.jpg",
     "author": "ספר הבית",
     "description": ""
   }
