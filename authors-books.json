@@ -8,5 +8,20 @@
     "cover": "books/fun-to-sleep.jpg",
     "author": "רינה ברוש",
     "description": ""
+  },
+  {
+    "cover": "books/tigi.jpg",
+    "author": "ספר הבית",
+    "description": ""
+  },
+  {
+    "cover": "books/clean_plate.jpg",
+    "author": "ספר הבית",
+    "description": ""
+  },
+  {
+    "cover": "books/confused-bite.jpg",
+    "author": "ספר הבית",
+    "description": ""
   }
 ]
