@@ -12,6 +12,16 @@ body {
   overflow-x: clip;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   font-family: "Noto Sans Hebrew", sans-serif;
   background-color: #ffffff;
@@ -1187,18 +1197,47 @@ body {
   margin-inline: 0.05em;
 }
 
-.authors-marquee {
+.books-section {
+  margin-top: clamp(7rem, 3.5vw, 3rem);
+}
+
+.books-marquee {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 80px;
-  margin-top: clamp(1rem, 2.5vw, 2rem);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding-block: clamp(1.25rem, 5vw, 5rem) clamp(1.5rem, 4vw, 2.5rem);
   overflow: hidden;
   direction: ltr;
   position: relative;
   background-color: rgba(80, 77, 242, 0.06);
 }
 
-.authors-marquee::before {
+.books-marquee__title {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding-inline: 1.5rem;
+  max-width: 100%;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  direction: rtl;
+  color: #2e2a42;
+  scroll-margin-top: 5.5rem;
+}
+
+.books-marquee__scroller {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: clamp(16rem, 32vw, 23rem);
+  overflow: hidden;
+  position: relative;
+}
+
+.books-marquee__scroller::before {
   content: "";
   position: absolute;
   inset-block: 0;
@@ -1209,7 +1248,7 @@ body {
   z-index: 1;
 }
 
-.authors-marquee::after {
+.books-marquee__scroller::after {
   content: "";
   position: absolute;
   inset-block: 0;
@@ -1220,32 +1259,50 @@ body {
   z-index: 1;
 }
 
-.authors-marquee__track {
+.books-marquee__track {
   display: flex;
   width: max-content;
-  animation: authors-marquee-scroll var(--marquee-duration, 40s) linear infinite;
+  animation: books-marquee-scroll var(--marquee-duration, 40s) linear infinite;
   will-change: transform;
 }
 
-.authors-marquee__group {
+.books-marquee__group {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
-  padding-inline-end: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  padding-inline-end: clamp(1.25rem, 3vw, 2rem);
 }
 
-.authors-marquee__group span {
+.books-marquee__item {
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.books-marquee__cover {
+  width: clamp(12rem, 26vw, 18rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(46, 42, 66, 0.12);
+}
+
+.books-marquee__author {
+  max-width: clamp(12rem, 26vw, 18rem);
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
   font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.2;
+  text-align: center;
   unicode-bidi: plaintext;
   color: #444444;
 }
 
-@keyframes authors-marquee-scroll {
+@keyframes books-marquee-scroll {
   from {
     transform: translate3d(-50%, 0, 0);
   }
@@ -1261,7 +1318,7 @@ body {
     will-change: auto;
   }
 
-  .authors-marquee__track {
+  .books-marquee__track {
     animation: none;
     will-change: auto;
   }
@@ -1317,8 +1374,8 @@ body {
     top: 65%;
   }
 
-  .authors-marquee {
-    margin-top: clamp(6rem, 22vw, 9rem);
+  .books-section {
+    margin-top: clamp(8rem, 22vw, 9rem);
   }
 
   .gradient-section {

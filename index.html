@@ -35,7 +35,7 @@
             <img class="logo" src="inline-logo-only-text.png" alt="TinyTale" />
             <nav class="header-nav">
                 <a class="header-link header-link--desktop" href="/blog" hidden>בלוג</a>
-                <a class="cta-button" href="https://tinytaleapp.com">נסו בחינם</a>
+                <a class="header-link" href="#books-section-title">הסיפריה</a>
                 <button class="header-menu-button" type="button" aria-label="תפריט" aria-expanded="false"
                     aria-controls="header-menu" hidden>
                     <svg width="28" height="23" viewBox="0 0 28 23" fill="none" aria-hidden="true">
@@ -84,16 +84,14 @@
             </div>
         </section>
 
-        <div class="authors-marquee" aria-label="סופרים וסופרות שותפים">
-            <div class="authors-marquee__track">
-                <div class="authors-marquee__group">
-                    <span>רינה ברוש</span>
-                    <span>עמית מזרחי</span>
-                    <span>ד״ר תומר ליפשיץ מאיר</span>
-                    <span>נעמה ליפשיץ מאיר</span>
+        <section class="books-section" aria-labelledby="books-section-title">
+            <div class="books-marquee">
+                <h2 class="books-marquee__title" id="books-section-title">הספרים שתוכלו להתאים</h2>
+                <div class="books-marquee__scroller" aria-label="ספרים באוסף">
+                    <div class="books-marquee__track"></div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <section class="section gradient-section">
             <div class="clouds-background" aria-hidden="true">
@@ -320,7 +318,7 @@
     </aside>
 
     <script src="magic-highlight.js"></script>
-    <script src="authors-marquee.js"></script>
+    <script src="books-marquee.js"></script>
     <script src="reviews-carousel.js"></script>
     <script src="header.js"></script>
     <script src="legal-modal.js"></script>
