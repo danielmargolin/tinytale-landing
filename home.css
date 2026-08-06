@@ -1040,6 +1040,7 @@ body {
 .floating-tag--7 {
   top: 73%;
   left: 43%;
+  max-width: clamp(15rem, 30vw, 21rem);
 }
 
 .floating-tag--8 {
@@ -1452,7 +1453,7 @@ body {
   }
 
   .floating-tag--2 {
-    top: 25%;
+    top: 20%;
     left: 7%;
   }
 
@@ -1473,19 +1474,19 @@ body {
   }
 
   .floating-tag--6 {
-    top: 70%;
+    top: 75%;
     left: 7%;
     max-width: clamp(14rem, 27vw, 20rem);
   }
 
   .floating-tag--7 {
-    top: 79%;
+    top: 85%;
     left: 38%;
-    max-width: clamp(14rem, 27vw, 20rem);
+    max-width: clamp(20rem, 30vw, 30rem);
   }
 
   .floating-tag--8 {
-    top: 59%;
+    top: 67%;
     right: 6%;
   }
   .review-card {
