@@ -166,6 +166,49 @@ body {
   transform: translateY(6px);
 }
 
+/* Secondary CTA — outline. Padding is 2px shorter than .cta-button on every
+   side so the 2px border keeps the box identical in height and width. */
+.cta-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  box-sizing: border-box;
+  padding: 13px 34px;
+  border: 2px solid rgba(80, 77, 242, 0.4);
+  border-radius: 30px;
+  background-color: transparent;
+  color: #504df2;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+.cta-button-secondary:hover {
+  border-color: #504df2;
+  background-color: rgba(80, 77, 242, 0.07);
+}
+
+.cta-button-secondary__arrow {
+  font-size: 1.05em;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.cta-button-secondary:hover .cta-button-secondary__arrow {
+  transform: translateX(-4px);
+}
+
+.cta-button-secondary:active {
+  transform: translateY(2px);
+}
+
 .content {
   position: relative;
   flex: 1;
@@ -317,7 +360,11 @@ body {
   line-height: 1.6;
 }
 
-.hero-cta-button {
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
   align-self: flex-start;
   margin-top: 0.5rem;
 }
@@ -1183,15 +1230,16 @@ body {
   z-index: 2;
   margin: 0;
   max-width: 48rem;
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-size: clamp(2.75rem, 6vw, 3.5rem);
   font-weight: 500;
   line-height: 1.2;
   text-align: center;
+  padding-bottom: 40px;
 }
 
 .inline-logo-text {
   display: inline-block;
-  height: 0.95em;
+  height: 3em;
   width: auto;
   vertical-align: -0.12em;
   margin-inline: 0.05em;
@@ -1361,8 +1409,18 @@ body {
     display: none;
   }
 
-  .hero-cta-button {
+  .hero-actions {
     align-self: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .hero-actions .cta-button {
+    padding-inline: clamp(18px, 6vw, 30px);
+  }
+
+  .hero-actions .cta-button-secondary {
+    padding-inline: calc(clamp(18px, 6vw, 30px) - 2px);
   }
 
   .hero-description {

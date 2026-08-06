@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TinyTale - ספרות ילדים מקצועית בהתאמה אישית</title>
+    <title>TinyTale -הילד שלכם הופך לגיבור של הסיפור</title>
     <meta name="description"
         content="ספרי ילדים נבחרים, בהתאמה אישית מדויקת וטבעית שמשתלבת באופן מושלם ביצירה המקורית. טכנולוגיה חדשנית יוצרת ספר שמרגיש כאילו נכתב ואויר במיוחד עבורם מלכתחילה" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="he_IL" />
-    <meta property="og:title" content="TinyTale - ספרות ילדים מקצועית בהתאמה אישית" />
+    <meta property="og:title" content="TinyTale - הילד שלכם הופך לגיבור של הסיפור" />
     <meta property="og:description"
         content="ספרי ילדים נבחרים, בהתאמה אישית מדויקת וטבעית שמשתלבת באופן מושלם ביצירה המקורית. טכנולוגיה חדשנית יוצרת ספר שמרגיש כאילו נכתב ואויר במיוחד עבורם מלכתחילה" />
     <meta property="og:url" content="https://tinytale.co.il/" />
@@ -31,11 +31,10 @@
 
 <body>
     <div class="page">
-        <header class="header">
+        <header class="header" style="display: none;">
             <img class="logo" src="inline-logo-only-text.png" alt="TinyTale" />
             <nav class="header-nav">
                 <a class="header-link header-link--desktop" href="/blog" hidden>בלוג</a>
-                <a class="header-link" href="#books-section-title">הסיפריה</a>
                 <button class="header-menu-button" type="button" aria-label="תפריט" aria-expanded="false"
                     aria-controls="header-menu" hidden>
                     <svg width="28" height="23" viewBox="0 0 28 23" fill="none" aria-hidden="true">
@@ -58,23 +57,28 @@
                 <div class="hero-titles">
                     <h1 class="hero-title">
                         <span class="magic-highlight-text">
-                            <span class="magic-highlight-gradient">ספרות ילדים</span>
+                            <span class="magic-highlight-gradient">הילד שלכם</span>
                         </span>
-                        מקצועית
+                        הופך
                     </h1>
                     <h1 class="hero-title">
-                        בהתאמה
+                        לגיבור
                         <span class="magic-highlight-text">
-                            <span class="magic-highlight-gradient">אישית</span>
+                            <span class="magic-highlight-gradient">הסיפור</span>
                         </span>
                     </h1>
                 </div>
                 <p class="hero-description">
-                    הדור הבא של חנויות ספרי הילדים.
-                    <br />
-                    הפכו רבי־מכר וספרים שנכתבו בידי מומחים לסיפורים אישיים, שבהם הילדים שלכם הם הגיבורים
+                    בחרו ספר מתוך הספרייה שלנו - רבי־מכר וספרים שנכתבו בידי מומחים <br />
+                    והילד שלכם ייכנס לאיורים ולעלילה כאילו הספר נכתב עבורו מלכתחילה.
                 </p>
-                <a class="cta-button hero-cta-button" href="https://tinytaleapp.com">נסו עכשיו בחינם</a>
+                <div class="hero-actions">
+                    <a class="cta-button hero-cta-button" href="https://tinytaleapp.com">נסו עכשיו בחינם</a>
+                    <a class="cta-button-secondary hero-secondary-button" href="#books-section-title">
+                        <span>עיינו בספרייה</span>
+                        <span class="cta-button-secondary__arrow" aria-hidden="true">←</span>
+                    </a>
+                </div>
             </div>
             <div class="hero-images">
                 <picture>
@@ -86,7 +90,10 @@
 
         <section class="books-section" aria-labelledby="books-section-title">
             <div class="books-marquee">
-                <h2 class="books-marquee__title" id="books-section-title">הספרים שתוכלו להתאים</h2>
+                <h2 class="books-marquee__title" id="books-section-title">הספרייה שלנו</h2>
+                <p class="books-marquee__description">
+                    ספרים שנכתבו ואוירו בידי סופרים ומאיירים מקצועיים - בחרו אחד, והם ייכנסו לתוכו
+                </p>
                 <div class="books-marquee__scroller" aria-label="ספרים באוסף">
                     <div class="books-marquee__track"></div>
                 </div>
@@ -108,27 +115,27 @@
             <div class="floating-tags">
                 <button class="floating-tag floating-tag--2" type="button"
                     data-legal-modal="floating-tags/advanced-illustrations.json">
-                    <span>טכנולוגיה מתקדמת לאיורים המדויקים ביותר</span>
+                    <span>הטכנולוגיה שמאחורי האיורים</span>
                 </button>
                 <button class="floating-tag floating-tag--5" type="button"
                     data-legal-modal="floating-tags/reading-engagement.json">
-                    <span>מחקרים מראים שילדים מגלים יותר מעורבות וחיבור לקריאה כשהם גיבורי הסיפור</span>
+                    <span>כשהוא הגיבור, ההקשבה משתנה</span>
                 </button>
                 <button class="floating-tag floating-tag--6" type="button"
                     data-legal-modal="floating-tags/print-stories.json">
-                    <span>תוכלו להדפיס את הסיפור האישי שלכם דרכנו</span>
+                    <span>דיגיטלי או מודפס - אתם בוחרים</span>
                 </button>
                 <button class="floating-tag floating-tag--7" type="button"
                     data-legal-modal="floating-tags/create-easily.json">
-                    <span>יוצרים סיפורים אישיים בקלות ובמהירות</span>
+                    <span>בחירת הספר עליכם-ההתאמה עלינו</span>
                 </button>
                 <button class="floating-tag floating-tag--8" type="button"
                     data-legal-modal="floating-tags/professional-authors.json">
-                    <span>סיפורים שנכתבו ואוירו ע״י סופרי ילדים מאיירים מקצועיים</span>
+                    <span>נכתב על ידי אנשי מקצוע</span>
                 </button>
             </div>
-            <h2 class="gradient-section-title">למה כדאי ליצור ספר מותאם עם <img class="inline-logo-text"
-                    src="inline-logo-only-text.png" alt="TinyTale" /></h2>
+            <h2 class="gradient-section-title">הכל מתחיל בספר טוב.<br>ואז הילד שלכם נכנס אליו.</h2>
+            <img class="inline-logo-text" src="inline-logo-only-text.png" alt="TinyTale" />
         </section>
 
         <section class="section how-section" aria-labelledby="how-section-title">
@@ -139,9 +146,9 @@
                 <li class="how-step">
                     <div class="how-step__text">
                         <span class="how-step__number" aria-hidden="true">1</span>
-                        <h3 class="how-step__title">יוצרים גיבורים</h3>
+                        <h3 class="how-step__title">מוסיפים את הגיבור שלכם</h3>
                         <p class="how-step__description">
-                            צרו פרופיל לכל הגיבורים שלכם כדי שתוכלו להתאים להם ספרים בקלות
+                            שם, גיל ותמונה — פעם אחת. הפרופיל נשמר, וכל ספר שתבחרו בעתיד יותאם אליו אוטומטית
                         </p>
                     </div>
                     <div class="how-step__visual">
@@ -152,9 +159,9 @@
                 <li class="how-step">
                     <div class="how-step__text">
                         <span class="how-step__number" aria-hidden="true">2</span>
-                        <h3 class="how-step__title">בוחרים ספר להתאמה</h3>
+                        <h3 class="how-step__title">בוחרים ספר מהספרייה</h3>
                         <p class="how-step__description">
-                            בכל ספר תוכלו לגלות מראש על מה הוא מספר, להכיר את הסופר, להבין אילו ערכים הוא מעביר ואילו
+                            בכל ספר תוכלו לגלות מראש על מה הוא מספר, להכיר את הסופר, ולראות אילו ערכים הוא נושא ואילו
                             שיחות הוא יכול לפתוח
                         </p>
                     </div>
@@ -166,7 +173,7 @@
                 <li class="how-step">
                     <div class="how-step__text">
                         <span class="how-step__number" aria-hidden="true">3</span>
-                        <h3 class="how-step__title">דיגיטלי ומודפס</h3>
+                        <h3 class="how-step__title">רואים לפני שמזמינים</h3>
                         <p class="how-step__description">
                             קבלו סימולציה אמיתית של הספר המודפס לפני שאתם מזמינים אותו לבית </p>
                     </div>
@@ -181,8 +188,8 @@
 
         <section class="section parents-section">
             <header class="parents-section__header">
-                <p class="section-subtitle">ביקורות אמיתיות, משפחות אמיתיות</p>
-                <h2 class="section-title">למה הורים אוהבים אותנו</h2>
+                <!-- <p class="section-subtitle">מה הורים מספרים</p> -->
+                <h2 class="section-title">משפחות מספרות</h2>
             </header>
             <div class="reviews-carousel" data-reviews-carousel>
                 <article class="review-card">
@@ -250,7 +257,7 @@
         <section class="section book-demo-section" aria-labelledby="book-demo-title">
             <header class="book-demo-section__header">
                 <h2 class="section-title" id="book-demo-title">דפדפו בספר לדוגמה</h2>
-                <p class="section-description">הכירו מקרוב את חוויית הקריאה בספר אישי של TinyTale</p>
+                <p class="section-description">ספר שלם, עמוד אחר עמוד — הותאם לתום, וייראה בדיוק כך גם עם הילד שלכם</p>
             </header>
             <div class="book-demo-frame">
                 <iframe class="book-demo-frame__iframe"
