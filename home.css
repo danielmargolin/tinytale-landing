@@ -1277,6 +1277,10 @@ body {
   scroll-margin-top: 5.5rem;
 }
 
+.books-marquee__description {
+  text-align: center;
+}
+
 .books-marquee__scroller {
   display: flex;
   align-items: center;
