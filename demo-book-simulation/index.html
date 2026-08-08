@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tiny Tale — Book Demo</title>
+  <style>
+    :root {
+      --bg: #f6f6ff;
+      --panel: #ffffff;
+      --ink: #2e2a42;
+      --btn: #504df2;
+      --btn-shadow: #3330d3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      justify-content: center;
+    }
+
+    #book-panel {
+      position: relative;
+      width: 100%;
+      background: var(--panel);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    #canvas-host,
+    #canvas-host canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #loading {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 15px;
+      z-index: 2;
+    }
+
+    #loading[hidden] {
+      display: none;
+    }
+
+    .icon-button {
+      appearance: none;
+      border: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      background: var(--btn);
+      color: #fff;
+      min-width: 36px;
+      min-height: 36px;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: 10px;
+      box-shadow: 0 3px 0 var(--btn-shadow);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #prev-btn {
+      left: 12px;
+    }
+
+    #next-btn {
+      right: 12px;
+    }
+
+    .icon-button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="book-panel">
+      <div id="canvas-host"></div>
+      <div id="loading">מכינים את הספר...</div>
+      <button id="prev-btn" class="icon-button" type="button" aria-label="Previous page">
+        <svg id="prev-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M19 12H5M5 12l6 6M5 12l6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button id="next-btn" class="icon-button" type="button" aria-label="Next page">
+        <svg id="next-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <script type="module" src="./demo.js"></script>
+</body>
+
+</html>
