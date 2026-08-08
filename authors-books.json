@@ -14,16 +14,19 @@
   {
     "cover": "books/compress/tigi.jpg",
     "author": "ספר הבית",
-    "description": ""
+    "description": "",
+    "detail": "my-tiger-friend-v2.html"
   },
   {
     "cover": "books/compress/clean_plate.jpg",
     "author": "ספר הבית",
-    "description": ""
+    "description": "",
+    "detail": "hebrew-birthday-template.html"
   },
   {
     "cover": "books/compress/confused-bite.jpg",
     "author": "ספר הבית",
-    "description": ""
+    "description": "",
+    "detail": "hebrew-the-confused-bite-template.html"
   }
 ]

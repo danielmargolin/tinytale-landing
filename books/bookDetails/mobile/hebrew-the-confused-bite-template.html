@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Book Screen Preview — עדי והַבִּיס שֶׁהִתְבַּלְבֵּל</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --purple: #504df2;
+      --purple-shadow: #3330d3;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      font-family: "Noto Sans Hebrew", sans-serif;
+      background: #fff;
+      color: var(--gray-900);
+    }
+
+    .root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      width: 100%;
+      background: #1a1a1a;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-chrome {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      display: flex;
+      justify-content: flex-start;
+      padding: calc(var(--safe-top) + 18px) 20px 0;
+      z-index: 2;
+    }
+
+    /* Mirrors components/BackButton.tsx (RTL) */
+    .back-btn-wrap {
+      width: 36px;
+      height: 36px;
+      margin-inline-end: 15px;
+      z-index: 1000;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 2px;
+      box-sizing: content-box;
+      border: 1px solid #e9edf6;
+      border-radius: 100px;
+      background: #fff;
+      box-shadow: none;
+      color: #02ba81;
+      cursor: pointer;
+    }
+
+    .back-btn i {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .body-column {
+      flex: 1;
+      min-height: 0;
+      background: #fff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* Drawer */
+    .drawer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      will-change: height;
+      touch-action: none;
+    }
+
+    .drawer-inner {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      touch-action: none;
+    }
+
+    .drag-handle-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0;
+      min-height: 44px;
+      flex-shrink: 0;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .drag-handle-area:active {
+      cursor: grabbing;
+    }
+
+    .drag-pill {
+      width: 48px;
+      height: 5px;
+      border-radius: 3px;
+      background: #d1d5db;
+    }
+
+    /* Scroll + gradients */
+    .scroll-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .drawer-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .drawer-scroll.is-locked {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .drawer-scroll-content {
+      width: 100%;
+      padding: 0 24px 24px;
+      align-items: stretch;
+    }
+
+    .gradient {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .gradient.visible {
+      opacity: 1;
+    }
+
+    .gradient-top {
+      top: 0;
+      background: linear-gradient(to bottom,
+          rgba(236, 234, 236, 0.95),
+          rgba(244, 238, 246, 0));
+    }
+
+    .gradient-bottom {
+      bottom: 0;
+      background: linear-gradient(to top,
+          rgba(236, 234, 236, 0.95),
+          rgba(242, 230, 247, 0));
+    }
+
+    /* Content */
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .byline {
+      font-size: 14px;
+      color: var(--gray-500);
+      font-weight: 400;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--gray-200);
+      margin: 12px 0;
+      transform: scaleY(0.5);
+      transform-origin: top;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-item .material-icons {
+      font-size: 20px;
+      color: var(--gray-500);
+    }
+
+    .stat-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--gray-600);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--gray-200);
+    }
+
+    .tag-pill-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .summary-heading {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 15px;
+      line-height: 24px;
+      margin-bottom: 8px;
+      white-space: pre-wrap;
+    }
+
+    .section-block {
+      margin-top: 24px;
+    }
+
+    .section-block h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin: 16px 0 10px;
+    }
+
+    .section-block h3:first-child {
+      margin-top: 0;
+    }
+
+    .section-block p {
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 24px;
+      margin-bottom: 8px;
+    }
+
+    .section-block strong {
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .section-block ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+
+    .section-block li {
+      position: relative;
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 24px;
+      padding-inline-start: 18px;
+      margin-bottom: 8px;
+    }
+
+    .section-block li::before {
+      content: "•";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      color: var(--gray-500);
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 2;
+      padding: 12px 20px calc(max(var(--safe-bottom), 16px) + 8px);
+      background: #fff;
+      border-top: 1px solid var(--gray-100);
+      flex-shrink: 0;
+    }
+
+    .cta {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 15px;
+      background: var(--purple);
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--purple-shadow);
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    .cta:active:not(:disabled) {
+      box-shadow: none;
+      transform: translateY(6px);
+    }
+
+    .cta:disabled {
+      background: #b1bbd0;
+      box-shadow: 0 6px 0 #9499a6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="root" id="root">
+    <div class="hero" id="hero">
+      <img id="cover" alt="Cover" src="https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/the-confused-bite/girl/cover.jpg" />
+      <div class="hero-chrome">
+        <div class="back-btn-wrap">
+          <button class="back-btn" id="backBtn" type="button" aria-label="חזרה">
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="body-column" id="bodyColumn">
+      <div class="drawer" id="drawer">
+        <div class="drawer-inner" id="drawerInner">
+          <div class="drag-handle-area" id="dragHandle" role="slider" aria-label="שינוי גובה פאנל פרטי הספר"
+            aria-orientation="vertical">
+            <div class="drag-pill"></div>
+          </div>
+
+          <div class="scroll-wrap" id="scrollWrap">
+            <div class="gradient gradient-top" id="gradTop"></div>
+            <div class="gradient gradient-bottom" id="gradBottom"></div>
+            <div class="drawer-scroll is-locked" id="drawerScroll">
+              <div class="drawer-scroll-content" id="content">
+                <!-- filled by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer" id="footer">
+        <button class="cta" id="cta" type="button">
+          התאימו את הספר
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mirror constants from bookScreen.tsx
+    const HERO_HEIGHT_RATIO = 0.52;
+    const DRAWER_OVERLAP = 32;
+    const DRAWER_COLLAPSED_HEIGHT_TRIM = 7;
+    const DRAWER_EXPANDED_SCREEN_RATIO = 0.8;
+    const DEFAULT_FOOTER_HEIGHT = 88;
+    const DRAWER_SPRING = { damping: 26, stiffness: 360, mass: 0.88 };
+    const DRAWER_PAN_ACTIVATION_PX = 2;
+    const DRAWER_FLING_OPEN_VY = -180;
+    const DRAWER_FLING_CLOSE_VY = 320;
+    const DRAWER_EXPAND_RELEASE_RATIO = 0.32;
+    const DRAWER_EDGE_RUBBER_BAND = 0.28;
+
+    const TEMPLATE = {
+  "id": "hebrew-the-confused-bite-template",
+  "title": "עדי והַבִּיס שֶׁהִתְבַּלְבֵּל",
+  "description": "עדי היא ילדה מתוקה שאוהבת מכל הלב. אבל לפעמים, כשהרגשות בפנים הופכים לסערה גדולה של אהבה או כעס, הגוף פועל לפני שהראש מספיק לחשוב – ופתאום בורח לו ביס!\n\nבעזרת ינשוף חכם ומכיל, הגיבורה שלנו מגלה סוד חשוב: כל הרגשות שבעולם הם טובים ובסדר גמור. מותר להרגיש, מותר לכעוס, ומותר לאהוב בענק! אבל יחד עם ההבנה הזו, מגיעים גם כלים מעשיים וקסומים שעוזרים לגוף להירגע ולשחרר את הרגש, מבלי להכאיב לאף אחד.\n\n\"הביס שהתבלבל\" הוא סיפור חם ומלא חמלה, שעוזר לקטנטנים להבין את עצמם טוב יותר, ולנווט את הרגשות הענקיים שלהם בביטחון.",
+  "language": "he",
+  "page_count": 10,
+  "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/the-confused-bite/girl/cover.jpg",
+  "categories": [
+    "כיף",
+    "רגשות"
+  ],
+  "tags": [],
+  "authorName": "TinyTale",
+  "authorNotes": "### **קצת על הספר**\n\nהספר הזה נולד מתוך ההבנה שפעוטות חווים רגשות בעוצמה של \"סופר-גיבורים\", אבל הגוף שלהם עדיין לומד איך להכיל את כל העוצמה הזו. לעיתים קרובות, נשיקה או נשיכה הן לא פעולות של כוונה רעה, אלא ניסיון של הגוף לפרוק אנרגיה רגשית שהציפה אותו – בין אם זו אהבה גדולה או תסכול רגעי.\n\nבכתיבת הספר, היה לנו חשוב לייצר גשר בין מה שהילד \"יודע\" (שאסור לנשוך) לבין מה שהוא \"מרגיש\" (הצפה גופנית). הספר לא מתמקד בענישה, אלא בבניית מיומנות של ויסות רגשי. הוא מעניק לילדים (ולהורים) שפה משותפת וכלים פיזיים פשוטים שהופכים את רגע המשבר להזדמנות ללמידה וצמיחה.\n\n### **ערכים ומסרים מרכזיים**\n\n* **תיקוף רגשי מלא:** המסר המרכזי הוא שכל הרגשות הם לגיטימיים ובסדר גמור. אין \"רגשות רעים\" – מותר לכעוס, מותר להתלהב ומותר להתאכזב.\n* **הפרדה בין רגש להתנהגות:** אנחנו מחבקים את הרגש של הילד, אבל מציבים גבול ברור להתנהגות פוגענית. המטרה היא ללמד ש\"אני ילד טוב שחווה רגע קשה\", ולא \"אני ילד נושך\".\n* **העצמה ושליטה עצמית:** במקום לבקש מהילד \"פשוט להפסיק\", הספר מציע לו כלים אקטיביים כמו נשימה, רקיעה בקרקע או חיבוק עצמי. זה מעביר את השליטה לידיים של הילד והופך אותו ל\"גיבור ומנצח\" על הדחפים שלו.\n* **הסרת אשמה ובושה:** המושג \"הביס שהתבלבל\" עוזר להסיר את מעטפת הבושה סביב האירוע. הבושה חוסמת למידה, בעוד שהבנה וחמלה מאפשרות לילד לשתף פעולה עם השינוי.\n* **ביטחון בקשר:** הדיאלוג עם הינשוף החכם מדגיש את החשיבות של הדרכה רגועה ומכילה. כשהילד מרגיש מובן, הוא פנוי יותר ללמוד דרכים חדשות לבטא את עצמו."
+};
+    const PREVIEW = {
+  "ctaUrl": "https://tinytaleapp.com",
+  "ctaLabel": "התאימו את הספר",
+  "backFallbackUrl": "https://tinytale.co.il",
+  "bylinePrefix": "מאת",
+  "summaryHeading": "תקציר"
+};
+
+    // --- Simple markdown (headings, bold, lists, paragraphs) ---
+    function renderMarkdown(md) {
+      const lines = md.replace(/\r\n/g, "\n").split("\n");
+      let html = "";
+      let inList = false;
+      let para = [];
+
+      const flushPara = () => {
+        if (!para.length) return;
+        const text = para.join(" ").trim();
+        if (text) {
+          html += `<p>${inlineMd(text)}</p>`;
+        }
+        para = [];
+      };
+
+      const closeList = () => {
+        if (inList) {
+          html += "</ul>";
+          inList = false;
+        }
+      };
+
+      for (const raw of lines) {
+        const line = raw.trimEnd();
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+          flushPara();
+          closeList();
+          continue;
+        }
+
+        const h3 = trimmed.match(/^###\s+(.+)$/);
+        if (h3) {
+          flushPara();
+          closeList();
+          html += `<h3>${inlineMd(h3[1])}</h3>`;
+          continue;
+        }
+
+        const li = trimmed.match(/^\*\s+(.+)$/);
+        if (li) {
+          flushPara();
+          if (!inList) {
+            html += "<ul>";
+            inList = true;
+          }
+          html += `<li>${inlineMd(li[1])}</li>`;
+          continue;
+        }
+
+        closeList();
+        para.push(trimmed);
+      }
+      flushPara();
+      closeList();
+      return html;
+    }
+
+    function inlineMd(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    function renderContent() {
+      const tags = TEMPLATE.tags.length ? TEMPLATE.tags : TEMPLATE.categories;
+
+      const tagsHtml = tags
+        .map((tag) => `<div class="tag-pill"><span class="tag-pill-text">${tag}</span></div>`)
+        .join("");
+
+      document.getElementById("content").innerHTML = `
+        <h1 class="title">${TEMPLATE.title}</h1>
+        <p class="byline">${PREVIEW.bylinePrefix} ${TEMPLATE.authorName}</p>
+
+        <div class="divider"></div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="material-icons">menu_book</span>
+            <span class="stat-text">${TEMPLATE.page_count}</span>
+          </div>
+          <div class="tag-row">${tagsHtml}</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="summary-heading">${PREVIEW.summaryHeading}</h2>
+        <p class="description">${TEMPLATE.description
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")}</p>
+
+        <div class="section-block">
+          ${renderMarkdown(TEMPLATE.authorNotes)}
+        </div>
+      `;
+    }
+
+    // --- Layout ---
+    const root = document.getElementById("root");
+    const hero = document.getElementById("hero");
+    const drawer = document.getElementById("drawer");
+    const footer = document.getElementById("footer");
+    const drawerScroll = document.getElementById("drawerScroll");
+    const dragHandle = document.getElementById("dragHandle");
+    const drawerInner = document.getElementById("drawerInner");
+    const gradTop = document.getElementById("gradTop");
+    const gradBottom = document.getElementById("gradBottom");
+
+    let collapsedH = 200;
+    let expandedH = 600;
+    let footerH = DEFAULT_FOOTER_HEIGHT;
+    let drawerExpanded = false;
+    let currentH = collapsedH;
+
+    function windowH() {
+      return root.clientHeight || window.innerHeight;
+    }
+
+    function computeHeights() {
+      const h = windowH();
+      const heroHeight = Math.round(h * HERO_HEIGHT_RATIO);
+      hero.style.height = heroHeight + "px";
+
+      footerH = footer.offsetHeight || DEFAULT_FOOTER_HEIGHT;
+      expandedH = Math.round(h * DRAWER_EXPANDED_SCREEN_RATIO);
+      const collapsed = Math.max(
+        160,
+        h - heroHeight - footerH + DRAWER_OVERLAP
+      );
+      collapsedH =
+        Math.min(collapsed, expandedH - 48) - DRAWER_COLLAPSED_HEIGHT_TRIM;
+
+      currentH = Math.min(expandedH, Math.max(collapsedH, currentH));
+      setDrawerHeight(currentH, false);
+
+      const range = expandedH - collapsedH;
+      const expandLine = collapsedH + DRAWER_EXPAND_RELEASE_RATIO * range;
+      setExpandedState(currentH >= expandLine);
+    }
+
+    function setDrawerHeight(h, animate) {
+      currentH = h;
+      if (animate) {
+        // spring handled separately
+        drawer.style.height = h + "px";
+      } else {
+        drawer.style.transition = "none";
+        drawer.style.height = h + "px";
+        drawer.style.bottom = footerH + "px";
+      }
+    }
+
+    function setExpandedState(expanded) {
+      drawerExpanded = expanded;
+      if (expanded) {
+        drawerScroll.classList.remove("is-locked");
+        // When expanded: only handle area is the drag target (scroll works)
+      } else {
+        drawerScroll.classList.add("is-locked");
+        drawerScroll.scrollTop = 0;
+      }
+      updateGradients();
+    }
+
+    function updateGradients() {
+      if (!drawerExpanded) {
+        gradTop.classList.remove("visible");
+        // Show bottom fade when content overflows collapsed peek
+        const overflow =
+          drawerScroll.scrollHeight > drawerScroll.clientHeight + 2;
+        gradBottom.classList.toggle("visible", overflow);
+        return;
+      }
+      const { scrollTop, scrollHeight, clientHeight } = drawerScroll;
+      const canScroll = scrollHeight > clientHeight + 2;
+      gradTop.classList.toggle("visible", canScroll && scrollTop > 2);
+      gradBottom.classList.toggle(
+        "visible",
+        canScroll && scrollTop < scrollHeight - clientHeight - 2
+      );
+    }
+
+    drawerScroll.addEventListener("scroll", updateGradients, { passive: true });
+
+    // --- Spring (critically-damped-ish, matching DRAWER_SPRING feel) ---
+    let springRaf = null;
+    let springVel = 0;
+
+    function springTo(target) {
+      if (springRaf) cancelAnimationFrame(springRaf);
+      const { damping, stiffness, mass } = DRAWER_SPRING;
+      // Convert Reanimated-ish spring to a simple integrator
+      const dt = 1 / 60;
+      const zeta = damping / (2 * Math.sqrt(stiffness * mass));
+      const omega = Math.sqrt(stiffness / mass);
+
+      function step() {
+        const x = currentH - target;
+        // Underdamped / overdamped spring force
+        const accel = -stiffness * x - damping * springVel;
+        springVel += (accel / mass) * dt;
+        currentH += springVel * dt;
+
+        // Settle
+        if (Math.abs(x) < 0.4 && Math.abs(springVel) < 8) {
+          currentH = target;
+          springVel = 0;
+          drawer.style.height = currentH + "px";
+          springRaf = null;
+          updateGradients();
+          return;
+        }
+        drawer.style.height = currentH + "px";
+        springRaf = requestAnimationFrame(step);
+      }
+      springRaf = requestAnimationFrame(step);
+    }
+
+    function snapTo(target, isExpanded) {
+      setExpandedState(isExpanded);
+      springVel = 0;
+      springTo(target);
+    }
+
+    // --- Pan gesture ---
+    let dragging = false;
+    let startY = 0;
+    let startH = 0;
+    let lastY = 0;
+    let lastT = 0;
+    let velocityY = 0;
+    let activated = false;
+    let pointerId = null;
+
+    function onPointerDown(e) {
+      // When expanded, only drag from handle (unless content at top and pulling down)
+      if (drawerExpanded && e.currentTarget !== dragHandle) {
+        return;
+      }
+      if (springRaf) {
+        cancelAnimationFrame(springRaf);
+        springRaf = null;
+      }
+      dragging = true;
+      activated = false;
+      pointerId = e.pointerId;
+      startY = e.clientY;
+      lastY = e.clientY;
+      lastT = performance.now();
+      startH = currentH;
+      velocityY = 0;
+      springVel = 0;
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch (_) { }
+    }
+
+    function onPointerMove(e) {
+      if (!dragging || e.pointerId !== pointerId) return;
+      const dy = e.clientY - startY;
+      if (!activated) {
+        if (Math.abs(dy) < DRAWER_PAN_ACTIVATION_PX) return;
+        activated = true;
+      }
+
+      const now = performance.now();
+      const dt = Math.max(1, now - lastT);
+      velocityY = ((e.clientY - lastY) / dt) * 1000; // px/s
+      lastY = e.clientY;
+      lastT = now;
+
+      // translationY in RN: positive = finger down → height decreases
+      const raw = startH - dy;
+      let next = raw;
+      if (raw < collapsedH) {
+        next = collapsedH - (collapsedH - raw) * DRAWER_EDGE_RUBBER_BAND;
+      } else if (raw > expandedH) {
+        next = expandedH + (raw - expandedH) * DRAWER_EDGE_RUBBER_BAND;
+      }
+      currentH = next;
+      drawer.style.height = currentH + "px";
+    }
+
+    function onPointerUp(e) {
+      if (!dragging || e.pointerId !== pointerId) return;
+      dragging = false;
+      pointerId = null;
+
+      if (!activated) return;
+
+      const minH = collapsedH;
+      const maxH = expandedH;
+      const y = currentH;
+      const range = maxH - minH;
+      const expandLine = minH + DRAWER_EXPAND_RELEASE_RATIO * range;
+      const vy = velocityY;
+
+      let target = minH;
+      let expand = false;
+      if (vy < DRAWER_FLING_OPEN_VY) {
+        target = maxH;
+        expand = true;
+      } else if (vy > DRAWER_FLING_CLOSE_VY) {
+        target = minH;
+        expand = false;
+      } else if (y > expandLine) {
+        target = maxH;
+        expand = true;
+      } else {
+        target = minH;
+        expand = false;
+      }
+
+      // Carry a bit of velocity into spring
+      springVel = -vy * 0.15;
+      snapTo(target, expand);
+    }
+
+    // Collapsed: whole drawer pans; Expanded: only handle
+    dragHandle.addEventListener("pointerdown", onPointerDown);
+    drawerInner.addEventListener("pointerdown", (e) => {
+      if (drawerExpanded) return;
+      onPointerDown(e);
+    });
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+
+    document.getElementById("cta").addEventListener("click", () => {
+      window.location.href = PREVIEW.ctaUrl;
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      // Prefer real navigation history; otherwise fall back to the marketing site.
+      if (window.history.length > 1 && document.referrer) {
+        window.history.back();
+      } else {
+        window.location.href = PREVIEW.backFallbackUrl;
+      }
+    });
+
+    // Init
+    renderContent();
+    computeHeights();
+    requestAnimationFrame(() => {
+      computeHeights();
+      updateGradients();
+    });
+
+    const ro = new ResizeObserver(() => computeHeights());
+    ro.observe(root);
+    ro.observe(footer);
+    window.addEventListener("resize", computeHeights);
+  </script>
+</body>
+
+</html>
