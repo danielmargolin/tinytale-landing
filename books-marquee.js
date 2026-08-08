@@ -8,6 +8,12 @@
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
+  const desktopQuery = window.matchMedia("(min-width: 900px)");
+
+  function detailUrl(detailPage) {
+    const platform = desktopQuery.matches ? "desktop" : "mobile";
+    return `books/bookDetails/${platform}/${detailPage}`;
+  }
 
   function createBookItem(book) {
     const item = document.createElement("figure");
@@ -32,8 +38,23 @@
       item.appendChild(caption);
     }
 
-    return item;
+    if (!book.detail) return item;
+
+    const link = document.createElement("a");
+    link.className = "books-marquee__link";
+    link.dataset.detail = book.detail;
+    link.href = detailUrl(book.detail);
+    link.setAttribute("aria-label", img.alt);
+    link.appendChild(item);
+    return link;
   }
+
+  // Keep href platform-correct for cloned marquee items and mid-session resizes.
+  track.addEventListener("pointerdown", (event) => {
+    const link = event.target.closest(".books-marquee__link");
+    if (!link || !track.contains(link) || !link.dataset.detail) return;
+    link.href = detailUrl(link.dataset.detail);
+  });
 
   function buildGroup(books) {
     const group = document.createElement("div");

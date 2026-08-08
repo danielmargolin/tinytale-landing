@@ -2,12 +2,14 @@
   {
     "cover": "books/compress/dr-tomer.jpg",
     "author": "ד״ר תומר ליפשיץ מאיר ונעמה ליפשיץ מאיר",
-    "description": ""
+    "description": "",
+    "detail": "doctor-tomer-explains.html"
   },
   {
     "cover": "books/compress/fun-to-sleep.jpg",
     "author": "רינה ברוש",
-    "description": ""
+    "description": "",
+    "detail": "hebrew-what-fun-to-sleep-template.html"
   },
   {
     "cover": "books/compress/tigi.jpg",
