@@ -831,6 +831,33 @@ body {
   height: auto;
 }
 
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-inline-start: -0.5rem;
+  border-radius: 999px;
+  color: #121140;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.footer-social:hover {
+  color: #121140;
+  background-color: rgba(18, 17, 64, 0.08);
+}
+
+.footer-social__icon {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
 .footer-newsletter__description {
   margin: 0;
   max-width: 28rem;
