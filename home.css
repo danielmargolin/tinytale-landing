@@ -369,6 +369,61 @@ body {
   margin-top: 0.5rem;
 }
 
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.15rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-reveal-media {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.hero-logo,
+.hero-titles,
+.hero-description,
+.hero-actions {
+  animation: hero-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-images {
+  animation: hero-reveal-media 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-logo {
+  animation-delay: 0.06s;
+}
+
+.hero-titles {
+  animation-delay: 0.18s;
+}
+
+.hero-description {
+  animation-delay: 0.3s;
+}
+
+.hero-actions {
+  animation-delay: 0.42s;
+}
+
+.hero-images {
+  animation-delay: 0.24s;
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -1418,6 +1473,16 @@ body {
   .books-marquee__track {
     animation: none;
     will-change: auto;
+  }
+
+  .hero-logo,
+  .hero-titles,
+  .hero-description,
+  .hero-actions,
+  .hero-images {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
