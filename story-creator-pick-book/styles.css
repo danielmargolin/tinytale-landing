@@ -413,3 +413,25 @@ body {
     margin: 12px;
   }
 }
+
+/* Landing-page iframe: size to content so the host page is the only scroller. */
+html.is-embedded,
+html.is-embedded body {
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.is-embedded .page,
+html.is-embedded .content,
+html.is-embedded .scroll-shell,
+html.is-embedded .scroll-view {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  flex: none;
+}
+
+html.is-embedded .scroll-fade {
+  display: none !important;
+}

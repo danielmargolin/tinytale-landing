@@ -4,6 +4,61 @@ const TEMPLATES_PROXY_URL = "/api/templates";
 const TEMPLATES_LOCAL_URL = "./templates.json";
 const TINYTALE_AUTHOR = "TinyTale";
 const FALLBACK_COVER = "https://placehold.co/300x320.png";
+const EMBED_MESSAGE_SOURCE = "tinytale-books-picker";
+
+function isEmbedded() {
+  try {
+    return window.self !== window.top;
+  } catch {
+    return true;
+  }
+}
+
+function postEmbedMessage(payload) {
+  if (!isEmbedded()) return;
+  window.parent.postMessage(
+    { source: EMBED_MESSAGE_SOURCE, ...payload },
+    "*"
+  );
+}
+
+function reportEmbedHeight() {
+  const page = document.querySelector(".page");
+  const sections = document.getElementById("sections");
+  const height = Math.ceil(
+    Math.max(
+      page?.getBoundingClientRect().height ?? 0,
+      sections?.scrollHeight ?? 0
+    )
+  );
+  if (height <= 0) return;
+  postEmbedMessage({ type: "resize", height });
+}
+
+function setupEmbedHost() {
+  if (!isEmbedded()) return;
+
+  document.documentElement.classList.add("is-embedded");
+
+  const observer = new ResizeObserver(reportEmbedHeight);
+  const page = document.querySelector(".page");
+  const sections = document.getElementById("sections");
+  if (page) observer.observe(page);
+  if (sections) observer.observe(sections);
+
+  document.addEventListener(
+    "wheel",
+    (event) => {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      event.preventDefault();
+      postEmbedMessage({ type: "wheel", deltaY: event.deltaY });
+    },
+    { passive: false }
+  );
+
+  window.addEventListener("load", reportEmbedHeight);
+  reportEmbedHeight();
+}
 
 function preferMobilePreview() {
   return window.matchMedia("(max-width: 767px)").matches;
@@ -345,6 +400,8 @@ async function loadTemplates() {
 }
 
 async function main() {
+  setupEmbedHost();
+
   const sectionsEl = document.getElementById("sections");
   const scrollView = document.getElementById("scroll-view");
 
@@ -360,7 +417,7 @@ async function main() {
       horizontal: true,
       coverScale: 0.82,
       accessory: createPerkButton(),
-      verticalScrollEl: scrollView,
+      verticalScrollEl: isEmbedded() ? null : scrollView,
     });
 
     const authorsSection = createSection({
@@ -374,7 +431,8 @@ async function main() {
     sectionsEl.replaceChildren(
       ...[houseSection, authorsSection].filter(Boolean)
     );
-    setupScrollFades(scrollView);
+    if (!isEmbedded()) setupScrollFades(scrollView);
+    reportEmbedHeight();
   } catch (error) {
     const banner = document.createElement("div");
     banner.className = "error-banner";
@@ -382,6 +440,7 @@ async function main() {
       "לא ניתן לטעון את רשימת הסיפורים. בדקו את חיבור הרשת ונסו שוב.";
     console.error(error);
     sectionsEl.replaceChildren(banner);
+    reportEmbedHeight();
   }
 }
 
