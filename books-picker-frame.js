@@ -132,6 +132,12 @@
     }
     if (!isPickerDoc(pickerDoc())) return;
     const target = hitTest(event.clientX, event.clientY)?.closest("a, button");
-    if (target && !target.closest(".carousel-arrow")) target.click();
+    if (!target || target.closest(".carousel-arrow")) return;
+    // Cover/perk links must leave the landing page, not navigate inside the iframe.
+    if (target.tagName === "A" && target.href) {
+      window.location.assign(target.href);
+      return;
+    }
+    target.click();
   });
 })();

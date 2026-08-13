@@ -84,6 +84,7 @@ function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
   const link = document.createElement("a");
   link.className = "cover";
   link.href = bookPreviewUrl(template.id);
+  if (isEmbedded()) link.target = "_top";
   link.style.setProperty("--cover-scale", String(coverScale));
   link.setAttribute("aria-label", template.title);
 
@@ -173,6 +174,7 @@ function createPerkButton() {
   const button = document.createElement("a");
   button.className = "perk-button";
   button.href = COPY.signUpUrl;
+  if (isEmbedded()) button.target = "_top";
   button.setAttribute("aria-label", COPY.benefitButton);
 
   const icon = document.createElement("span");
