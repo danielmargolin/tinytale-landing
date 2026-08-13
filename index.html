@@ -94,8 +94,10 @@
                 <p class="books-marquee__description">
                     ספרים שנכתבו ואוירו בידי סופרים ומאיירים מקצועיים - בחרו אחד, והם ייכנסו לתוכו
                 </p>
-                <div class="books-marquee__scroller" aria-label="ספרים באוסף">
-                    <div class="books-marquee__track"></div>
+                <div class="books-picker-frame">
+                    <iframe class="books-picker-frame__iframe" src="story-creator-pick-book/"
+                        title="בחירת ספר מתוך הספרייה" loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"></iframe>
                 </div>
             </div>
         </section>
@@ -336,7 +338,6 @@
     </aside>
 
     <script src="magic-highlight.js"></script>
-    <script src="books-marquee.js"></script>
     <script src="reviews-carousel.js"></script>
     <script src="header.js"></script>
     <script src="legal-modal.js"></script>

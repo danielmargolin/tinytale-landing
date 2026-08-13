@@ -1,0 +1,58 @@
+{
+  "id": "hebrew-birthday-template",
+  "title": "יום ההולדת הקסום של עדי",
+  "description": "עדי מתעוררת בבוקר יום ההולדת שלה ויוצאת למסע קסום של הפתעות, חברים, עוגה ומתנות.\nמסיבה בבית, ליצן בחצר, שירים סביב העוגה וחיבוק לסוף היום — סיפור שמח וחם שמלווה ילדים ביום המיוחד שלהן, ומזכיר כמה טוב להרגיש אהובים.",
+  "language": "he",
+  "page_count": 10,
+  "target_age_range": [3, 7],
+  "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/hebrew-birthday-template/girl/clean_plate.jpg",
+  "categories": ["כיף", "יום הולדת"],
+  "tags": ["יום הולדת", "מסיבה", "חברים", "משפחה"],
+  "variables": [
+    {
+      "name": "child_name",
+      "type": "string",
+      "required": true,
+      "default": null
+    },
+    {
+      "name": "is_male",
+      "type": "boolean",
+      "required": true,
+      "default": null
+    }
+  ],
+  "characters": [
+    {
+      "label": "child",
+      "description": "דמות הילד/ה הראשית — חוגג/ת יום הולדת קסום",
+      "required": false
+    }
+  ],
+  "priceDetails": {
+    "digitalBook": {
+      "basePrice": 10.0,
+      "deliveryCost": 0.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 10.0
+    },
+    "printedBook": {
+      "basePrice": 60.0,
+      "deliveryCost": 29.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 89.0
+    }
+  },
+  "authorNotes": "### קצת על הספר\n\nיום ההולדת הוא רגע מיוחד לכל ילד וילדה — מלא ציפייה, שמחה וקצת ריגוש. הספר הזה עוקב אחרי יום הולדת שלם, מהבוקר הראשון ועד הנשיקה ללילה, דרך הפתעות משפחתיות, חברים, משחקים ועוגה.\n\n### ערכים ומסרים\n\n* שמחה וחגיגיות ביום המיוחד של הילד/ה\n* חברות וחיבור — חברים שמגיעים לחגוג יחד\n* משפחה ואהבה — הורים שמכינים הפתעות ומלווים את החגיגה\n* הכרת תודה — לסיים את היום בחיבוק וב\"תודה\"\n* דמיון ורוגע — לסגור את היום בחלום מתוק",
+  "authorName": "TinyTale",
+  "isHouseBook": true,
+  "preview": {
+    "ctaLabel": "התאימו את הספר",
+    "ctaUrl": "https://tinytaleapp.com/?preSelectedTemplateId=hebrew-birthday-template",
+    "backFallbackUrl": "https://tinytale.co.il"
+  }
+}

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__" dir="__HTML_DIR__">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>__PAGE_TITLE__</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --purple: #504df2;
+      --purple-shadow: #3330d3;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+      --page-bg: #f3f5fa;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      font-family: "Noto Sans Hebrew", sans-serif;
+      background: var(--page-bg);
+      color: var(--gray-900);
+    }
+
+    .root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--page-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Fixed top-right (physical right, including Hebrew) */
+    .back-btn-wrap {
+      position: fixed;
+      top: max(var(--safe-top), 20px);
+      right: 28px;
+      width: auto;
+      height: 44px;
+      z-index: 1000;
+    }
+
+    .back-btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: auto;
+      height: 100%;
+      padding: 2px 18px;
+      box-sizing: content-box;
+      border: 1px solid #e9edf6;
+      border-radius: 100px;
+      background: #fff;
+      box-shadow: none;
+      color: #02ba81;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .back-btn i {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .back-btn-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1;
+    }
+
+    .page-container {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 1360px;
+      align-self: center;
+      display: flex;
+      flex-direction: row;
+      gap: 28px;
+      padding: max(var(--safe-top), 24px) var(--page-pad-x, 28px) max(var(--safe-bottom), 24px);
+    }
+
+    .cover-column {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      width: var(--cover-width, 360px);
+    }
+
+    .cover-card {
+      width: 100%;
+      aspect-ratio: 0.72;
+      max-height: 100%;
+      align-self: center;
+      border-radius: 30px;
+      background: #d7dce6;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .cover-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .content-column {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+    }
+
+    .content-card {
+      flex: 1;
+      min-height: 0;
+      background: #fff;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid #e6eaf2;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scroll-area {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scroll-container {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-content {
+      width: 100%;
+      padding: 30px 34px 24px;
+    }
+
+    .gradient {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .gradient.visible {
+      opacity: 1;
+    }
+
+    .gradient-top {
+      top: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(236, 234, 236, 0.95),
+        rgba(244, 238, 246, 0)
+      );
+    }
+
+    .gradient-bottom {
+      bottom: 0;
+      background: linear-gradient(
+        to top,
+        rgba(236, 234, 236, 0.95),
+        rgba(242, 230, 247, 0)
+      );
+    }
+
+    .title {
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--gray-900);
+      letter-spacing: -0.9px;
+      margin-bottom: 10px;
+      line-height: 44px;
+    }
+
+    .byline {
+      font-size: 16px;
+      color: var(--gray-500);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--gray-200);
+      margin: 16px 0;
+      transform: scaleY(0.5);
+      transform-origin: top;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-item .material-icons {
+      font-size: 20px;
+      color: var(--gray-500);
+    }
+
+    .stat-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gray-600);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--gray-200);
+    }
+
+    .tag-pill-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    .summary-heading {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--gray-900);
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 25px;
+      color: var(--gray-600);
+      white-space: pre-wrap;
+    }
+
+    .section-block {
+      margin-top: 20px;
+    }
+
+    .section-block h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin: 16px 0 10px;
+    }
+
+    .section-block h3:first-child {
+      margin-top: 0;
+    }
+
+    .section-block p {
+      font-size: 16px;
+      color: var(--gray-500);
+      line-height: 25px;
+      margin-bottom: 8px;
+    }
+
+    .section-block strong {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .section-block ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+
+    .section-block li {
+      position: relative;
+      font-size: 16px;
+      color: var(--gray-500);
+      line-height: 25px;
+      padding-inline-start: 18px;
+      margin-bottom: 8px;
+    }
+
+    .section-block li::before {
+      content: "•";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      color: var(--gray-500);
+    }
+
+    .footer {
+      flex-shrink: 0;
+      padding: 16px 24px 20px;
+      border-top: 1px solid #eceff5;
+      background: #fff;
+    }
+
+    .cta {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 15px;
+      background: var(--purple);
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 6px 0 var(--purple-shadow);
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    .cta:active {
+      box-shadow: none;
+      transform: translateY(6px);
+    }
+
+    @media (max-width: 900px) {
+      .page-container {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .cover-column {
+        width: min(360px, 100%) !important;
+        height: auto;
+        max-height: 50vh;
+        align-self: center;
+      }
+
+      .content-column {
+        min-height: 420px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="root" id="root">
+    <div class="back-btn-wrap">
+      <button class="back-btn" id="backBtn" type="button" aria-label="__BACK_ARIA_LABEL__">
+        <i class="fa-solid __BACK_ICON__" aria-hidden="true"></i>
+        <span class="back-btn-label">__BACK_LABEL__</span>
+      </button>
+    </div>
+
+    <div class="page-container" id="pageContainer">
+      <div class="cover-column" id="coverColumn">
+        <div class="cover-card">
+          <img id="cover" alt="Cover" src="__COVER_URL__" />
+        </div>
+      </div>
+
+      <div class="content-column">
+        <div class="content-card">
+          <div class="scroll-area" id="scrollArea">
+            <div class="gradient gradient-top" id="gradTop"></div>
+            <div class="gradient gradient-bottom" id="gradBottom"></div>
+            <div class="scroll-container" id="scrollContainer">
+              <div class="scroll-content" id="content">
+                <!-- filled by JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <button class="cta" id="cta" type="button">
+              __CTA_LABEL__
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TABLET_BREAKPOINT = 768;
+    const TEMPLATE = __TEMPLATE_JSON__;
+    const PREVIEW = __PREVIEW_JSON__;
+
+    function renderMarkdown(md) {
+      const lines = (md || "").replace(/\r\n/g, "\n").split("\n");
+      let html = "";
+      let inList = false;
+      let para = [];
+
+      const flushPara = () => {
+        if (!para.length) return;
+        const text = para.join(" ").trim();
+        if (text) html += `<p>${inlineMd(text)}</p>`;
+        para = [];
+      };
+
+      const closeList = () => {
+        if (inList) {
+          html += "</ul>";
+          inList = false;
+        }
+      };
+
+      for (const raw of lines) {
+        const trimmed = raw.trimEnd().trim();
+        if (!trimmed) {
+          flushPara();
+          closeList();
+          continue;
+        }
+        const h3 = trimmed.match(/^###\s+(.+)$/);
+        if (h3) {
+          flushPara();
+          closeList();
+          html += `<h3>${inlineMd(h3[1])}</h3>`;
+          continue;
+        }
+        const li = trimmed.match(/^\*\s+(.+)$/);
+        if (li) {
+          flushPara();
+          if (!inList) {
+            html += "<ul>";
+            inList = true;
+          }
+          html += `<li>${inlineMd(li[1])}</li>`;
+          continue;
+        }
+        closeList();
+        para.push(trimmed);
+      }
+      flushPara();
+      closeList();
+      return html;
+    }
+
+    function inlineMd(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    }
+
+    function escapeText(text) {
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function renderContent() {
+      const tags = (TEMPLATE.tags && TEMPLATE.tags.length)
+        ? TEMPLATE.tags
+        : (TEMPLATE.categories || []);
+
+      const tagsHtml = tags
+        .map((tag) => `<div class="tag-pill"><span class="tag-pill-text">${escapeText(tag)}</span></div>`)
+        .join("");
+
+      const pageCountBlock =
+        TEMPLATE.page_count > 0
+          ? `<div class="stat-item">
+              <span class="material-icons">menu_book</span>
+              <span class="stat-text">${TEMPLATE.page_count}</span>
+            </div>`
+          : "";
+
+      const descriptionBlock = TEMPLATE.description
+        ? `<div class="divider"></div>
+           <h2 class="summary-heading">${escapeText(PREVIEW.summaryHeading)}</h2>
+           <p class="description">${escapeText(TEMPLATE.description)}</p>`
+        : "";
+
+      document.getElementById("content").innerHTML = `
+        <h1 class="title">${escapeText(TEMPLATE.title)}</h1>
+        <p class="byline">${escapeText(PREVIEW.bylinePrefix)} ${escapeText(TEMPLATE.authorName)}</p>
+
+        <div class="divider"></div>
+
+        <div class="stats-row">
+          ${pageCountBlock}
+          <div class="tag-row">${tagsHtml}</div>
+        </div>
+
+        ${descriptionBlock}
+
+        <div class="section-block">
+          ${renderMarkdown(TEMPLATE.authorNotes)}
+        </div>
+      `;
+    }
+
+    function updateLayout() {
+      const w = window.innerWidth;
+      const horizontalPadding = w >= 1400 ? 48 : 28;
+      const coverColumnWidth = Math.min(450, Math.max(300, Math.round(w * 0.33)));
+
+      document.documentElement.style.setProperty("--page-pad-x", horizontalPadding + "px");
+      document.getElementById("coverColumn").style.width = coverColumnWidth + "px";
+    }
+
+    function updateGradients() {
+      const el = document.getElementById("scrollContainer");
+      const gradTop = document.getElementById("gradTop");
+      const gradBottom = document.getElementById("gradBottom");
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const canScroll = scrollHeight > clientHeight + 2;
+      gradTop.classList.toggle("visible", canScroll && scrollTop > 2);
+      gradBottom.classList.toggle(
+        "visible",
+        canScroll && scrollTop < scrollHeight - clientHeight - 2
+      );
+    }
+
+    document.getElementById("scrollContainer").addEventListener("scroll", updateGradients, {
+      passive: true,
+    });
+
+    document.getElementById("cta").addEventListener("click", () => {
+      window.location.href = PREVIEW.ctaUrl;
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      if (window.history.length > 1 && document.referrer) {
+        window.history.back();
+      } else {
+        window.location.href = PREVIEW.backFallbackUrl;
+      }
+    });
+
+    renderContent();
+    updateLayout();
+    requestAnimationFrame(updateGradients);
+    window.addEventListener("resize", () => {
+      updateLayout();
+      updateGradients();
+    });
+  </script>
+</body>
+
+</html>

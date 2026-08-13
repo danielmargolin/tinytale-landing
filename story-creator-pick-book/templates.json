@@ -1,0 +1,317 @@
+{
+  "templates": [
+    {
+      "id": "hebrew-the-confused-bite-template2",
+      "title": "תָּמָר והַבִּיס שֶׁהִתְבַּלְבֵּל",
+      "description": "תָּמָר היא ילדה מתוקה שאוהבת מכל הלב. אבל לפעמים, כשהרגשות בפנים הופכים לסערה גדולה של אהבה או כעס, הגוף פועל לפני שהראש מספיק לחשוב – ופתאום בורח לו ביס!\n\nבעזרת ינשוף חכם ומכיל, הגיבורה שלנו מגלה סוד חשוב: כל הרגשות שבעולם הם טובים ובסדר גמור. מותר להרגיש, מותר לכעוס, ומותר לאהוב בענק! אבל יחד עם ההבנה הזו, מגיעים גם כלים מעשיים וקסומים שעוזרים לגוף להירגע ולשחרר את הרגש, מבלי להכאיב לאף אחד.\n\n\"הביס שהתבלבל\" הוא סיפור חם ומלא חמלה, שעוזר לקטנטנים להבין את עצמם טוב יותר, ולנווט את הרגשות הענקיים שלהם בביטחון.",
+      "language": "he",
+      "page_count": 10,
+      "target_age_range": null,
+      "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/hebrew-the-confused-bite-template2/girl/cover.jpg",
+      "categories": [
+        "כיף",
+        "רגשות"
+      ],
+      "tags": [],
+      "variables": [
+        {
+          "name": "child_name",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "is_male",
+          "type": "boolean",
+          "required": true,
+          "default": null
+        }
+      ],
+      "characters": [
+        {
+          "label": "child",
+          "description": "דמות הילד/ה הראשית שלומד/ת להתמודד עם רגשות גדולים בלי לנשוך",
+          "required": false
+        }
+      ],
+      "priceDetails": {
+        "digitalBook": {
+          "basePrice": 10.0,
+          "deliveryCost": 0.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 10.0
+        },
+        "printedBook": {
+          "basePrice": 60.0,
+          "deliveryCost": 29.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 89.0
+        }
+      },
+      "authorNotes": "### **קצת על הספר**\n\nהספר הזה נולד מתוך ההבנה שפעוטות חווים רגשות בעוצמה של \"סופר-גיבורים\", אבל הגוף שלהם עדיין לומד איך להכיל את כל העוצמה הזו. לעיתים קרובות, נשיקה או נשיכה הן לא פעולות של כוונה רעה, אלא ניסיון של הגוף לפרוק אנרגיה רגשית שהציפה אותו – בין אם זו אהבה גדולה או תסכול רגעי.\n\nבכתיבת הספר, היה לנו חשוב לייצר גשר בין מה שהילד \"יודע\" (שאסור לנשוך) לבין מה שהוא \"מרגיש\" (הצפה גופנית). הספר לא מתמקד בענישה, אלא בבניית מיומנות של ויסות רגשי. הוא מעניק לילדים (ולהורים) שפה משותפת וכלים פיזיים פשוטים שהופכים את רגע המשבר להזדמנות ללמידה וצמיחה.\n\n### **ערכים ומסרים מרכזיים**\n\n* **תיקוף רגשי מלא:** המסר המרכזי הוא שכל הרגשות הם לגיטימיים ובסדר גמור. אין \"רגשות רעים\" – מותר לכעוס, מותר להתלהב ומותר להתאכזב.\n* **הפרדה בין רגש להתנהגות:** אנחנו מחבקים את הרגש של הילד, אבל מציבים גבול ברור להתנהגות פוגענית. המטרה היא ללמד ש\"אני ילד טוב שחווה רגע קשה\", ולא \"אני ילד נושך\".\n* **העצמה ושליטה עצמית:** במקום לבקש מהילד \"פשוט להפסיק\", הספר מציע לו כלים אקטיביים כמו נשימה, רקיעה בקרקע או חיבוק עצמי. זה מעביר את השליטה לידיים של הילד והופך אותו ל\"גיבור ומנצח\" על הדחפים שלו.\n* **הסרת אשמה ובושה:** המושג \"הביס שהתבלבל\" עוזר להסיר את מעטפת הבושה סביב האירוע. הבושה חוסמת למידה, בעוד שהבנה וחמלה מאפשרות לילד לשתף פעולה עם השינוי.\n* **ביטחון בקשר:** הדיאלוג עם הינשוף החכם מדגיש את החשיבות של הדרכה רגועה ומכילה. כשהילד מרגיש מובן, הוא פנוי יותר ללמוד דרכים חדשות לבטא את עצמו.",
+      "authorName": "TinyTale",
+      "isHouseBook": true,
+      "storyId": null
+    },
+    {
+      "id": "hebrew-birthday-template",
+      "title": "יום ההולדת הקסום של דני",
+      "description": "דני מתעורר בבוקר יום ההולדת שלו ויוצא למסע קסום של הפתעות, חברים, עוגה ומתנות.\nמסיבה בבית, ליצן בחצר, שירים סביב העוגה וחיבוק לסוף היום — סיפור שמח וחם שמלווה ילדים ביום המיוחד שלהם, ומזכיר כמה טוב להרגיש אהובים.",
+      "language": "he",
+      "page_count": 10,
+      "target_age_range": [
+        3,
+        7
+      ],
+      "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/hebrew-birthday-template/boy/clean_plate.jpg",
+      "categories": [
+        "כיף",
+        "יום הולדת"
+      ],
+      "tags": [
+        "יום הולדת",
+        "מסיבה",
+        "חברים",
+        "משפחה"
+      ],
+      "variables": [
+        {
+          "name": "child_name",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "is_male",
+          "type": "boolean",
+          "required": true,
+          "default": null
+        }
+      ],
+      "characters": [
+        {
+          "label": "child",
+          "description": "דמות הילד/ה הראשית — חוגג/ת יום הולדת קסום",
+          "required": false
+        }
+      ],
+      "priceDetails": {
+        "digitalBook": {
+          "basePrice": 10.0,
+          "deliveryCost": 0.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 10.0
+        },
+        "printedBook": {
+          "basePrice": 60.0,
+          "deliveryCost": 29.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 89.0
+        }
+      },
+      "authorNotes": "### קצת על הספר\n\nיום ההולדת הוא רגע מיוחד לכל ילד וילדה — מלא ציפייה, שמחה וקצת ריגוש. הספר הזה עוקב אחרי יום הולדת שלם, מהבוקר הראשון ועד הנשיקה ללילה, דרך הפתעות משפחתיות, חברים, משחקים ועוגה.\n\n### ערכים ומסרים\n\n* שמחה וחגיגיות ביום המיוחד של הילד/ה\n* חברות וחיבור — חברים שמגיעים לחגוג יחד\n* משפחה ואהבה — הורים שמכינים הפתעות ומלווים את החגיגה\n* הכרת תודה — לסיים את היום בחיבוק וב\"תודה\"\n* דמיון ורוגע — לסגור את היום בחלום מתוק",
+      "authorName": "TinyTale",
+      "isHouseBook": true,
+      "storyId": null
+    },
+    {
+      "id": "hebrew-what-fun-to-sleep-template2",
+      "title": "איזה כיף לישון",
+      "description": "עומר פשוט לא אוהב ללכת לישון. כשהחדר מחשיך והכול נהיה שקט, הוא מתהפך במיטה ומרגיש קצת לבד.\nבעזרת נשימה שקטה, זיכרונות מהיום וחיבוק לדובי האהוב, הוא לומד להירגע.\nזהו סיפור רך ומרגיע שמלווה ילדים ברגעי הפרידה מהיום, מזכיר להם שהם לא לבד ונותן כלים להרדמות.\nספר מושלם לזמן השכבה, שמחבר בין קושי טבעי לבין תחושת ביטחון ונעימות.",
+      "language": "he",
+      "page_count": 12,
+      "target_age_range": [
+        2,
+        6
+      ],
+      "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/hebrew-what-fun-to-sleep-template2/boy/cover.jpg",
+      "categories": [
+        "לפני השינה",
+        "רגשות"
+      ],
+      "tags": [
+        "שינה",
+        "שגרת ערב",
+        "דובי",
+        "רוגע"
+      ],
+      "variables": [
+        {
+          "name": "child_name",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "is_male",
+          "type": "boolean",
+          "required": true,
+          "default": null
+        }
+      ],
+      "characters": [
+        {
+          "label": "child",
+          "description": "דמות הילד/ה הראשית — לומד/ת להירגע ולהירדם בנחת",
+          "required": false
+        }
+      ],
+      "priceDetails": {
+        "digitalBook": {
+          "basePrice": 39.0,
+          "deliveryCost": 0.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 39.0
+        },
+        "printedBook": {
+          "basePrice": 119.0,
+          "deliveryCost": 29.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 148.0
+        }
+      },
+      "authorNotes": "### ערכים ומסרים\n\n* נרמול הקושי להירדם והפחד מהלילה\n* כלים פשוטים להרגעה עצמית (נשימה, מחשבות נעימות, מגע)\n* חיזוק תחושת ביטחון גם כשההורה לא בחדר\n* הכרה ברגשות של געגוע ובדידות כמשהו טבעי\n* יצירת חוויית שינה חיובית ורכה\n\n### על המחברת\n\nהיי, אני רינה ברוש. כתבתי והוצאתי לאור מעל לעשרה ספרים, מתוכם שישה ספרי ילדים, שנוגעים ברגעים הקטנים והאמיתיים של היומיום.\n\nבכתיבה שלי אני משלבת רגישות, דמיון ועדינות, ומביאה אל הדף חוויות שילדים והורים מכירים היטב. אני מאמינה שסיפורים יכולים לעזור לילדים להבין את עצמם, ונותנים להם כלים להביע את הרגשות שלהם.\n\nדרך מילים פשוטות ולב פתוח, אני יוצרת עולמות שמעניקים ביטחון, נחמה וחיוך.",
+      "authorName": "רינה ברוש",
+      "isHouseBook": false,
+      "storyId": null
+    },
+    {
+      "id": "doctor-tomer-explains",
+      "title": "דוקטור תומר מסביר לי מה קורה במרפאה",
+      "description": "מה עושה הרופא כשבודק את הלב?\nלמה אומרים \"אההה\"?\nאיך סטטוסקופ עובד?\nולמה לפעמים צריך זריקה ולא סירופ?\n\nבספר הזה ד\"ר תומר מזמין את מאיה להכיר את המרפאה בדרך רגועה, מסקרנת ומלאת חיוכים.\nבכל עמוד מחכה שאלה שילדים באמת שואלים, תשובה פשוטה וברורה, ואיורים צבעוניים שמלווים את המסע בין המכשירים, הבדיקות וההסברים.\nכי ככל שמבינים יותר, מרגישים בטוחים יותר.\n\nספר ילדים מאת רופא הילדים ד\"ר תומר, שנכתב מתוך שנים של מפגשים עם ילדים סקרנים והורים שרוצים להפוך את הביקור במרפאה לחוויה נעימה.",
+      "language": "he",
+      "page_count": 12,
+      "target_age_range": [
+        3,
+        8
+      ],
+      "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/doctor-tomer-explains/girl/cover.jpg",
+      "categories": [
+        "בריאות",
+        "גוף האדם"
+      ],
+      "tags": [
+        "רופא",
+        "מרפאה",
+        "סקרנות",
+        "גוף האדם",
+        "שאלות"
+      ],
+      "variables": [
+        {
+          "name": "child_name",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "is_male",
+          "type": "boolean",
+          "required": true,
+          "default": null
+        }
+      ],
+      "characters": [
+        {
+          "label": "child",
+          "description": "דמות הילד/ה הראשית — מבקר/ת במרפאה של ד\"ר תומר, שואל/ת שאלות ומגלה את הגוף",
+          "required": false
+        }
+      ],
+      "priceDetails": {
+        "digitalBook": {
+          "basePrice": 39.0,
+          "deliveryCost": 0.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 39.0
+        },
+        "printedBook": {
+          "basePrice": 119.0,
+          "deliveryCost": 29.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 148.0
+        }
+      },
+      "authorNotes": "### ערכים ומסרים\n\n* הפחתת חשש מביקור במרפאה דרך היכרות עם הבדיקות והמכשירים\n* עידוד סקרנות ושאילת שאלות — אין דבר כזה שאלה קטנה\n* היכרות ראשונה עם הגוף: לב, ריאות, אוזניים, שקדים, חום ודם\n* חיזוק האמון בין ילדים לרופאים\n\n### על המחברים\n\n**ד״ר תומר ליפשיץ מאיר**\n\nמומחה ברפואת ילדים ומנהל מרכז בריאות הילד בבית שאן.  \nבעל ניסיון רב בעבודה עם ילדים ומשפחות, ומשלב מקצועיות ורגישות.  \nכתיבתו הופכת מושגים רפואיים לנגישים ומעניקה להורים ולילדים כלים ברורים להתמודדות בריאה.\n\n**נעמה ליפשיץ מאיר**\n\nבעלת תואר בפסיכולוגיה וניהול, יוצרת תוכן ואסטרטגית שיווק דיגיטלית, מעצבת מסרים שמדברים אל אנשים ויוצרים חיבורים.",
+      "authorName": "ד\"ר תומר ליפשיץ מאיר ונעמה ליפשיץ מאיר",
+      "isHouseBook": false,
+      "storyId": null
+    },
+    {
+      "id": "my-tiger-friend-v2",
+      "title": "איתי וטיגי יוצאים להרפתקה",
+      "description": "איתי יוצא ליום טיול קסום ופוגש את טיגי הטיגריס, חתול קופצני בשם קפיץ וארנב חמוד בשם נוני. יחד הם יגלו שגם כשהדרך נראית חסומה, עבודת צוות וחברות אמיתית יכולים להתגבר על כל מכשול. ספר מיוחד שמזכיר לאיתי שהכוח הכי גדול בעולם הוא הכוח של חברים אמיתיים.",
+      "language": "he",
+      "page_count": 10,
+      "target_age_range": [
+        2,
+        8
+      ],
+      "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/my-tiger-friend-v2/boy/cover.jpg",
+      "categories": [
+        "כיף",
+        "הרפתקאות"
+      ],
+      "tags": [],
+      "variables": [
+        {
+          "name": "child_name",
+          "type": "string",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "is_male",
+          "type": "boolean",
+          "required": true,
+          "default": null
+        }
+      ],
+      "characters": [
+        {
+          "label": "child",
+          "description": "דמות הילד/ה הראשית שיוצאת להרפתקה עם טיגי הטיגריס",
+          "required": false
+        }
+      ],
+      "priceDetails": {
+        "digitalBook": {
+          "basePrice": 10.0,
+          "deliveryCost": 0.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 10.0
+        },
+        "printedBook": {
+          "basePrice": 60.0,
+          "deliveryCost": 29.0,
+          "discount": 0.0,
+          "discountSource": null,
+          "couponCode": null,
+          "finalPrice": 89.0
+        }
+      },
+      "authorNotes": "### קצת על הספר\nסיפור זה נולד מתוך המחשבה\nשהחברות הטובה ביותר נוצרת דווקא כשיוצאים מאזור הנוחות, מתמודדים עם\nאתגרים, ופותרים אותם יחד. אנחנו מקווים שהסיפור הזה יהיה גשר קטן\nבינכם לבין הילדים שלכם.\n\n### ערכים ומסרים\n- **כוחה של חברות** - הגיבור/ה יוצא/ת לדרך לבד, ולאורך הסיפור מגלה שחברים אמיתיים הם המתנה הכי יקרה. הספר מראה לילדים שלהיפתח לאחרים - גם למי שנראה שונה - זו התחלה של משהו יפה.\n- **עבודת צוות מנצחת** - הנהר הרחב הוא מכשול שאף אחד לא היה מתגבר עליו לבד. דווקא כששיתפו פעולה, כל אחד בתרומתו הייחודית, הם הצליחו. זה שיעור חשוב שכוחנו גדול יותר כשאנחנו פועלים יחד.\n- **אומץ מול אתגרים** - כשהדרך נראית חסומה, קל להתייאש. הספר מלמד שעם קצת תושייה, ואמונה בעצמך ובחברים שלידך, אפשר לגלות פתרונות יצירתיים ולהמשיך הלאה.",
+      "authorName": "TinyTale",
+      "isHouseBook": true,
+      "storyId": null
+    }
+  ]
+}

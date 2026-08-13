@@ -1,0 +1,58 @@
+{
+  "id": "hebrew-what-fun-to-sleep-template",
+  "title": "איזה כיף לישון",
+  "description": "עדי פשוט לא אוהבת ללכת לישון. כשהחדר מחשיך והכול נהיה שקט, היא מתהפכת במיטה ומרגישה קצת לבד.\nבעזרת נשימה שקטה, זיכרונות מהיום וחיבוק לדובי האהוב, היא לומדת להירגע.\nזהו סיפור רך ומרגיע שמלווה ילדים ברגעי הפרידה מהיום, מזכיר להם שהם לא לבד ונותן כלים להרדמות.\nספר מושלם לזמן השכבה, שמחבר בין קושי טבעי לבין תחושת ביטחון ונעימות.",
+  "language": "he",
+  "page_count": 12,
+  "target_age_range": [2, 6],
+  "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/hebrew-what-fun-to-sleep-template/girl/cover.jpg",
+  "categories": ["לפני השינה", "רגשות"],
+  "tags": ["שינה", "שגרת ערב", "דובי", "רוגע"],
+  "variables": [
+    {
+      "name": "child_name",
+      "type": "string",
+      "required": true,
+      "default": null
+    },
+    {
+      "name": "is_male",
+      "type": "boolean",
+      "required": true,
+      "default": null
+    }
+  ],
+  "characters": [
+    {
+      "label": "child",
+      "description": "דמות הילד/ה הראשית — לומד/ת להירגע ולהירדם בנחת",
+      "required": false
+    }
+  ],
+  "priceDetails": {
+    "digitalBook": {
+      "basePrice": 39.0,
+      "deliveryCost": 0.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 39.0
+    },
+    "printedBook": {
+      "basePrice": 119.0,
+      "deliveryCost": 29.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 148.0
+    }
+  },
+  "authorNotes": "### ערכים ומסרים\n\n* נרמול הקושי להירדם והפחד מהלילה\n* כלים פשוטים להרגעה עצמית (נשימה, מחשבות נעימות, מגע)\n* חיזוק תחושת ביטחון גם כשההורה לא בחדר\n* הכרה ברגשות של געגוע ובדידות כמשהו טבעי\n* יצירת חוויית שינה חיובית ורכה\n\n### על המחברת\n\nהיי, אני רינה ברוש. כתבתי והוצאתי לאור מעל לעשרה ספרים, מתוכם שישה ספרי ילדים, שנוגעים ברגעים הקטנים והאמיתיים של היומיום.\n\nבכתיבה שלי אני משלבת רגישות, דמיון ועדינות, ומביאה אל הדף חוויות שילדים והורים מכירים היטב. אני מאמינה שסיפורים יכולים לעזור לילדים להבין את עצמם, ונותנים להם כלים להביע את הרגשות שלהם.\n\nדרך מילים פשוטות ולב פתוח, אני יוצרת עולמות שמעניקים ביטחון, נחמה וחיוך.",
+  "authorName": "רינה ברוש",
+  "isHouseBook": false,
+  "preview": {
+    "ctaLabel": "התאימו את הספר",
+    "ctaUrl": "https://tinytaleapp.com/?preSelectedTemplateId=hebrew-what-fun-to-sleep-template",
+    "backFallbackUrl": "https://tinytale.co.il"
+  }
+}

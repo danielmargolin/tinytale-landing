@@ -1,0 +1,58 @@
+{
+  "id": "my-tiger-friend-v2",
+  "title": "עדי וטיגי יוצאים להרפתקה",
+  "description": "עדי יוצאת ליום טיול קסום ופוגשת את טיגי הטיגריס, חתול קופצני בשם קפיץ וארנב חמוד בשם נוני. יחד הם יגלו שגם כשהדרך נראית חסומה, עבודת צוות וחברות אמיתית יכולים להתגבר על כל מכשול. ספר מיוחד שמזכיר לעדי שהכוח הכי גדול בעולם הוא הכוח של חברים אמיתיים.",
+  "language": "he",
+  "page_count": 10,
+  "target_age_range": [2, 8],
+  "cover_photo": "https://zosqogynxmflbtsdhyyd.supabase.co/storage/v1/object/public/tiny-tale-images/template_images/my-tiger-friend-v2/girl/cover.jpg",
+  "categories": ["כיף", "הרפתקאות"],
+  "tags": [],
+  "variables": [
+    {
+      "name": "child_name",
+      "type": "string",
+      "required": true,
+      "default": null
+    },
+    {
+      "name": "is_male",
+      "type": "boolean",
+      "required": true,
+      "default": null
+    }
+  ],
+  "characters": [
+    {
+      "label": "child",
+      "description": "דמות הילד/ה הראשית שיוצאת להרפתקה עם טיגי הטיגריס",
+      "required": false
+    }
+  ],
+  "priceDetails": {
+    "digitalBook": {
+      "basePrice": 10.0,
+      "deliveryCost": 0.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 10.0
+    },
+    "printedBook": {
+      "basePrice": 60.0,
+      "deliveryCost": 29.0,
+      "discount": 0.0,
+      "discountSource": null,
+      "couponCode": null,
+      "finalPrice": 89.0
+    }
+  },
+  "authorNotes": "### קצת על הספר\nסיפור זה נולד מתוך המחשבה\nשהחברות הטובה ביותר נוצרת דווקא כשיוצאים מאזור הנוחות, מתמודדים עם\nאתגרים, ופותרים אותם יחד. אנחנו מקווים שהסיפור הזה יהיה גשר קטן\nבינכם לבין הילדים שלכם.\n\n### ערכים ומסרים\n- **כוחה של חברות** - הגיבור/ה יוצא/ת לדרך לבד, ולאורך הסיפור מגלה שחברים אמיתיים הם המתנה הכי יקרה. הספר מראה לילדים שלהיפתח לאחרים - גם למי שנראה שונה - זו התחלה של משהו יפה.\n- **עבודת צוות מנצחת** - הנהר הרחב הוא מכשול שאף אחד לא היה מתגבר עליו לבד. דווקא כששיתפו פעולה, כל אחד בתרומתו הייחודית, הם הצליחו. זה שיעור חשוב שכוחנו גדול יותר כשאנחנו פועלים יחד.\n- **אומץ מול אתגרים** - כשהדרך נראית חסומה, קל להתייאש. הספר מלמד שעם קצת תושייה, ואמונה בעצמך ובחברים שלידך, אפשר לגלות פתרונות יצירתיים ולהמשיך הלאה.",
+  "authorName": "TinyTale",
+  "isHouseBook": true,
+  "preview": {
+    "ctaLabel": "התאימו את הספר",
+    "ctaUrl": "https://tinytaleapp.com/?preSelectedTemplateId=my-tiger-friend-v2",
+    "backFallbackUrl": "https://tinytale.co.il"
+  }
+}
