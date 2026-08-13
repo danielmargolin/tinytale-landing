@@ -46,16 +46,6 @@ function setupEmbedHost() {
   if (page) observer.observe(page);
   if (sections) observer.observe(sections);
 
-  document.addEventListener(
-    "wheel",
-    (event) => {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      event.preventDefault();
-      postEmbedMessage({ type: "wheel", deltaY: event.deltaY });
-    },
-    { passive: false }
-  );
-
   window.addEventListener("load", reportEmbedHeight);
   reportEmbedHeight();
 }
