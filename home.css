@@ -207,8 +207,11 @@ body {
 }
 
 .cta-button-secondary__arrow {
-  font-size: 1.05em;
-  line-height: 1;
+  display: block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
   transition: transform 0.15s ease;
 }
 
