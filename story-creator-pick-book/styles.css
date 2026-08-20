@@ -348,25 +348,6 @@ body {
   background: #e0e0e0;
 }
 
-.cover-category {
-  position: absolute;
-  top: 8px;
-  inset-inline-start: 5px;
-  inset-inline-end: 7px;
-  z-index: 2;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.cover-tag {
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  font-size: 13px;
-  padding: 5px 13px;
-  border-radius: 16px;
-  line-height: 1.2;
-}
-
 .cover-pending,
 .cover-error {
   position: absolute;

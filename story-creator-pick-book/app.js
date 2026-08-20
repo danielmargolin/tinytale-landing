@@ -91,17 +91,6 @@ function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
   const media = document.createElement("div");
   media.className = "cover-media";
 
-  const category = template.categories?.[0];
-  if (category) {
-    const categoryWrap = document.createElement("div");
-    categoryWrap.className = "cover-category";
-    const tag = document.createElement("span");
-    tag.className = "cover-tag";
-    tag.textContent = category;
-    categoryWrap.appendChild(tag);
-    media.appendChild(categoryWrap);
-  }
-
   const img = document.createElement("img");
   img.className = "cover-image";
   img.alt = template.title;
