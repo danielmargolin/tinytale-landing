@@ -76,7 +76,8 @@
                     <a class="cta-button hero-cta-button" href="https://tinytaleapp.com">נסו עכשיו בחינם</a>
                     <a class="cta-button-secondary hero-secondary-button" href="#books-section-title">
                         <span>עיינו בספרייה</span>
-                        <svg class="cta-button-secondary__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <svg class="cta-button-secondary__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            aria-hidden="true">
                             <path d="M13 8H4.5M8 4.25 4 8l4 3.75" stroke="currentColor" stroke-width="1.75"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -143,6 +144,18 @@
             <img class="inline-logo-text" src="inline-logo-only-text.png" alt="TinyTale" />
         </section>
 
+        <section class="section book-demo-section" aria-labelledby="book-demo-title">
+            <header class="book-demo-section__header">
+                <h2 class="section-title" id="book-demo-title">דפדפו בספר לדוגמה</h2>
+                <p class="section-description">ספר שלם, עמוד אחר עמוד - הותאם לתום, וייראה בדיוק כך גם עם הילד שלכם</p>
+            </header>
+            <div class="book-demo-frame">
+                <iframe class="book-demo-frame__iframe" src="demo-book-simulation/"
+                    title="סימולציה אינטראקטיבית של ספר TinyTale" loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen"></iframe>
+            </div>
+        </section>
+
         <section class="section how-section" aria-labelledby="how-section-title">
             <header class="how-section__header">
                 <h2 class="section-title" id="how-section-title">איך זה עובד</h2>
@@ -191,25 +204,19 @@
             </ol>
         </section>
 
-        <section class="section book-demo-section" aria-labelledby="book-demo-title">
-            <header class="book-demo-section__header">
-                <h2 class="section-title" id="book-demo-title">דפדפו בספר לדוגמה</h2>
-                <p class="section-description">ספר שלם, עמוד אחר עמוד - הותאם לתום, וייראה בדיוק כך גם עם הילד שלכם</p>
-            </header>
-            <div class="book-demo-frame">
-                <iframe class="book-demo-frame__iframe" src="demo-book-simulation/"
-                    title="סימולציה אינטראקטיבית של ספר TinyTale" loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen"></iframe>
-            </div>
-        </section>
-
         <section class="section parents-section">
             <header class="parents-section__header">
                 <!-- <p class="section-subtitle">מה הורים מספרים</p> -->
                 <h2 class="section-title">משפחות מספרות</h2>
             </header>
             <div class="reviews-carousel" data-reviews-carousel>
-                <article class="review-card">
+                <article class="review-card review-card--has-media" data-review-card>
+                    <div class="review-card__media" data-review-media>
+                        <video class="review-card__video" data-review-video src="videos/book1.mp4"
+                            poster="videos/book1-poster.jpg" muted loop playsinline autoplay preload="metadata"
+                            controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture
+                            disableremoteplayback aria-label="קטע מהספר המותאם אישית"></video>
+                    </div>
                     <div class="review-card__body" data-review-body>
                         <div class="review-card__stars" aria-label="דירוג 5 מתוך 5">
                             <span aria-hidden="true">★</span>
@@ -226,7 +233,7 @@
                             <div class="review-card__avatar" aria-hidden="true">
                                 <img src="tinytale-icon-logo.png" alt="" />
                             </div>
-                            <span class="review-card__name" data-review-name>מיכל כ, אמא של ג (בת 4)</span>
+                            <span class="review-card__name" data-review-name>טניה כ, אמא של ג (בת 3)</span>
                         </footer>
                     </div>
                 </article>

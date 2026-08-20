@@ -585,6 +585,51 @@ body {
     0 4px 6px -1px #0000001a,
     0 2px 4px -2px #0000001a;
   text-align: center;
+  overflow: hidden;
+}
+
+.review-card--has-media {
+  padding: 0 0 clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.review-card__media {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  aspect-ratio: 832 / 464;
+  background-color: #f3f2f8;
+  overflow: hidden;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.review-card__media[hidden] {
+  display: none;
+}
+
+.review-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 -24px 32px -28px rgba(19, 19, 19, 0.18);
+}
+
+.review-card__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.review-card__video::-webkit-media-controls {
+  display: none !important;
+}
+
+.review-card__video::-webkit-media-controls-enclosure {
+  display: none !important;
 }
 
 .review-card__body {
@@ -598,12 +643,18 @@ body {
     transform 0.28s ease;
 }
 
-.review-card__body.is-leaving {
+.review-card--has-media .review-card__body {
+  padding: clamp(1.75rem, 3.5vw, 2.25rem) clamp(5.5rem, 9vw, 6.5rem) 0;
+}
+
+.review-card__body.is-leaving,
+.review-card__media.is-leaving {
   opacity: 0;
   transform: translateY(0.4rem);
 }
 
-.review-card__body.is-entering {
+.review-card__body.is-entering,
+.review-card__media.is-entering {
   opacity: 0;
   transform: translateY(-0.35rem);
 }
@@ -707,12 +758,15 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .review-card__body {
+  .review-card__body,
+  .review-card__media {
     transition: none;
   }
 
   .review-card__body.is-leaving,
-  .review-card__body.is-entering {
+  .review-card__body.is-entering,
+  .review-card__media.is-leaving,
+  .review-card__media.is-entering {
     transform: none;
   }
 
@@ -1633,6 +1687,14 @@ body {
   .review-card {
     padding: clamp(4.5rem, 8vw, 5.5rem) clamp(4rem, 7vw, 5rem)
       clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .review-card--has-media {
+    padding: 0 0 clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .review-card--has-media .review-card__body {
+    padding: clamp(1.5rem, 4vw, 2rem) clamp(1.75rem, 5vw, 2.5rem) 0;
   }
 }
 
