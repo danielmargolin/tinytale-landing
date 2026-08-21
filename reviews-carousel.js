@@ -20,16 +20,19 @@
         '"מאז שקיבלנו את הספר, היא מבקשת שנקרא אותו כמעט כל ערב. היא ממש התרגשה לראות את עצמה בתוך הסיפור, והאיורים יצאו פשוט מקסימים!"',
       name: "טניה, אמא של גאיה (בת 3)",
       video: "videos/book1.mp4",
+      poster: "videos/book1-poster.jpg",
     },
     {
       quote:
-        '"הספר יצא ממש יפה. היא ישבה ודפדפה בו שוב ושוב, וכל פעם שהיא קלטה שזאת היא באיור היא ישר חייכה וקראה לנו לראות"',
-      name: "אוריה ו, אבא של ב (בן 5)",
+        '"הספר יצא ממש יפה. הוא ישב ודפדף בו שוב ושוב, וכל פעם שהוא קלט שזה הוא באיור הוא ישר חייך וקרא לנו לראות"',
+      name: "אוריה ו, אבא של ב (בן 2.5)",
     },
     {
       quote:
         '"תקשיבו, היא פשוט עפה על הספר! בהתחלה היא לא הבינה איך היא נכנסה לתוך הסיפור, ואז עברה עמוד עמוד וחיפשה את עצמה בכל האיורים. מאז כבר קראנו אותו איזה חמש פעמים"',
-      name: "נועה ש, אמא של ת (בת 5)",
+      name: "אושרית, אמא של עדי (בת 4)",
+      video: "videos/book3.mp4",
+      poster: "videos/book3-poster.jpg",
     },
   ];
 
@@ -69,9 +72,16 @@
       media.hidden = !hasVideo;
     }
 
-    if (video && hasVideo && video.getAttribute("src") !== review.video) {
-      video.setAttribute("src", review.video);
-      video.load();
+    if (video && hasVideo) {
+      if (video.getAttribute("src") !== review.video) {
+        video.setAttribute("src", review.video);
+        if (review.poster) {
+          video.setAttribute("poster", review.poster);
+        } else {
+          video.removeAttribute("poster");
+        }
+        video.load();
+      }
     }
 
     syncVideoPlayback();
