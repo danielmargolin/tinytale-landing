@@ -364,6 +364,22 @@ body {
   border-radius: 20px;
 }
 
+/* Mirrors TemplateCover ageTag (bottom-left over cover image) */
+.cover-age-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 5px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 5px 13px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
 .cover-title-block {
   margin-top: 8px;
   text-align: start;

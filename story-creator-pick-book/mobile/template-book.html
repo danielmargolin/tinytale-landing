@@ -293,22 +293,26 @@
       gap: 8px;
     }
 
-    .stat-item {
+    .meta-chip {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 6px;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: var(--gray-100);
     }
 
-    .stat-item .material-icons {
-      font-size: 20px;
+    .meta-chip-label {
+      font-size: 13px;
+      font-weight: 500;
       color: var(--gray-500);
     }
 
-    .stat-text {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--gray-600);
+    .meta-chip-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-900);
     }
 
     .tag-row {
@@ -602,6 +606,20 @@
         .replace(/>/g, "&gt;");
     }
 
+    /** Formats target_age_range for display, e.g. [2, 9] → "2-9" */
+    function formatTargetAgeRange(range) {
+      if (!Array.isArray(range) || range.length === 0) return null;
+      if (range.length === 1) return String(range[0]);
+      return `${range[0]}-${range[range.length - 1]}`;
+    }
+
+    function metaChip(label, value) {
+      return `<div class="meta-chip">
+        <span class="meta-chip-label">${escapeText(label)}</span>
+        <span class="meta-chip-value">${escapeText(value)}</span>
+      </div>`;
+    }
+
     function renderContent(template, copy) {
       const tags =
         Array.isArray(template.tags) && template.tags.length
@@ -619,12 +637,12 @@
 
       const pageCount = Number(template.page_count) || 0;
       const pageCountBlock =
-        pageCount > 0
-          ? `<div class="stat-item">
-              <span class="material-icons">menu_book</span>
-              <span class="stat-text">${escapeText(pageCount)}</span>
-            </div>`
-          : "";
+        pageCount > 0 ? metaChip(copy.pagesLabel, pageCount) : "";
+
+      const ageRangeLabel = formatTargetAgeRange(template.target_age_range);
+      const ageRangeBlock = ageRangeLabel
+        ? metaChip(copy.agesLabel, ageRangeLabel)
+        : "";
 
       const description = template.description || "";
       const descriptionBlock = description
@@ -641,6 +659,7 @@
 
         <div class="stats-row">
           ${pageCountBlock}
+          ${ageRangeBlock}
           <div class="tag-row">${tagsHtml}</div>
         </div>
 
@@ -972,8 +991,18 @@
 
       const isHe = template.language === "he";
       const copy = isHe
-        ? { bylinePrefix: "מאת", summaryHeading: "תקציר" }
-        : { bylinePrefix: "By", summaryHeading: "Summary" };
+        ? {
+            bylinePrefix: "מאת",
+            summaryHeading: "תקציר",
+            pagesLabel: "עמודים",
+            agesLabel: "גילאים",
+          }
+        : {
+            bylinePrefix: "By",
+            summaryHeading: "Summary",
+            pagesLabel: "Pages",
+            agesLabel: "Ages",
+          };
 
       applyChrome(template, isHe);
       renderContent(template, copy);

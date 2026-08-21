@@ -80,6 +80,13 @@ function splitTemplates(templates) {
   return { tinyTale, other };
 }
 
+/** Formats target_age_range for display, e.g. [2, 9] → "2-9" */
+function formatTargetAgeRange(range) {
+  if (!Array.isArray(range) || range.length === 0) return null;
+  if (range.length === 1) return String(range[0]);
+  return `${range[0]}-${range[range.length - 1]}`;
+}
+
 function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
   const link = document.createElement("a");
   link.className = "cover";
@@ -109,6 +116,14 @@ function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
   });
 
   media.append(img, pending);
+
+  const ageRangeLabel = formatTargetAgeRange(template.target_age_range);
+  if (ageRangeLabel) {
+    const ageTag = document.createElement("div");
+    ageTag.className = "cover-age-tag";
+    ageTag.textContent = ageRangeLabel;
+    media.appendChild(ageTag);
+  }
 
   const titleBlock = document.createElement("div");
   titleBlock.className = "cover-title-block";
