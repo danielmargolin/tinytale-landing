@@ -967,7 +967,7 @@ body {
   justify-content: center;
   position: relative;
   z-index: 2;
-  margin-bottom: clamp(-2rem, -5vw, -2.75rem);
+  margin-bottom: clamp(-1.25rem, -3.5vw, -1.75rem);
   color: #504df2;
   opacity: 0.35;
   line-height: 0;
