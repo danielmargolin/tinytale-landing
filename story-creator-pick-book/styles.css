@@ -254,7 +254,7 @@ html.is-embedded .books-picker .scroll-view {
   align-items: flex-start;
   padding-bottom: 4px;
   overscroll-behavior-x: contain;
-  touch-action: pan-x;
+  touch-action: pan-x pan-y;
 }
 
 .books-picker .carousel-track::-webkit-scrollbar {

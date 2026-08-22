@@ -322,6 +322,62 @@ export async function initBooksPicker(root, options = {}) {
         },
         { passive: false }
       );
+
+      let pointerStartX = 0;
+      let pointerStartY = 0;
+      let pointerLastY = 0;
+      let pointerAxis = null;
+      let activePointerId = null;
+
+      const resetPointerScroll = (event) => {
+        if (activePointerId == null || event.pointerId !== activePointerId) return;
+        activePointerId = null;
+        pointerAxis = null;
+      };
+
+      track.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          activePointerId = event.pointerId;
+          pointerStartX = event.clientX;
+          pointerStartY = event.clientY;
+          pointerLastY = event.clientY;
+          pointerAxis = null;
+        },
+        { passive: true, capture: true }
+      );
+
+      track.addEventListener(
+        "pointermove",
+        (event) => {
+          if (activePointerId == null || event.pointerId !== activePointerId) {
+            return;
+          }
+
+          const deltaX = event.clientX - pointerStartX;
+          const deltaY = event.clientY - pointerStartY;
+
+          if (!pointerAxis) {
+            if (Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
+            pointerAxis = Math.abs(deltaY) > Math.abs(deltaX) ? "y" : "x";
+          }
+
+          if (pointerAxis !== "y") return;
+
+          event.preventDefault();
+          verticalScrollEl.scrollTop += event.clientY - pointerLastY;
+          pointerLastY = event.clientY;
+        },
+        { passive: false, capture: true }
+      );
+
+      track.addEventListener("pointerup", resetPointerScroll, {
+        capture: true,
+      });
+      track.addEventListener("pointercancel", resetPointerScroll, {
+        capture: true,
+      });
     }
 
     if (typeof ResizeObserver !== "undefined") {
