@@ -12,6 +12,7 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
   <style>
     :root {
       --purple: #504df2;
@@ -350,14 +351,24 @@
       margin-top: 24px;
     }
 
-    .section-block h3 {
+    .section-block h1,
+    .section-block h2,
+    .section-block h3,
+    .section-block h4,
+    .section-block h5,
+    .section-block h6 {
       font-size: 17px;
       font-weight: 700;
       color: var(--gray-900);
       margin: 16px 0 10px;
     }
 
-    .section-block h3:first-child {
+    .section-block h1:first-child,
+    .section-block h2:first-child,
+    .section-block h3:first-child,
+    .section-block h4:first-child,
+    .section-block h5:first-child,
+    .section-block h6:first-child {
       margin-top: 0;
     }
 
@@ -373,7 +384,12 @@
       color: var(--gray-800);
     }
 
-    .section-block ul {
+    .section-block em {
+      font-style: italic;
+    }
+
+    .section-block ul,
+    .section-block ol {
       list-style: none;
       padding: 0;
       margin: 0 0 12px;
@@ -388,8 +404,24 @@
       margin-bottom: 8px;
     }
 
-    .section-block li::before {
+    .section-block ul > li::before {
       content: "•";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0;
+      color: var(--gray-500);
+    }
+
+    .section-block ol {
+      counter-reset: md-ol;
+    }
+
+    .section-block ol > li {
+      counter-increment: md-ol;
+    }
+
+    .section-block ol > li::before {
+      content: counter(md-ol) ".";
       position: absolute;
       inset-inline-start: 0;
       top: 0;
@@ -531,72 +563,20 @@
 
     document.getElementById("backBtn").addEventListener("click", goBack);
 
-    // --- Simple markdown (headings, bold, lists, paragraphs) ---
-    function renderMarkdown(md) {
-      const lines = String(md || "").replace(/\r\n/g, "\n").split("\n");
-      let html = "";
-      let inList = false;
-      let para = [];
-
-      const flushPara = () => {
-        if (!para.length) return;
-        const text = para.join(" ").trim();
-        if (text) {
-          html += `<p>${inlineMd(text)}</p>`;
-        }
-        para = [];
-      };
-
-      const closeList = () => {
-        if (inList) {
-          html += "</ul>";
-          inList = false;
-        }
-      };
-
-      for (const raw of lines) {
-        const line = raw.trimEnd();
-        const trimmed = line.trim();
-
-        if (!trimmed) {
-          flushPara();
-          closeList();
-          continue;
-        }
-
-        const h3 = trimmed.match(/^###\s+(.+)$/);
-        if (h3) {
-          flushPara();
-          closeList();
-          html += `<h3>${inlineMd(h3[1])}</h3>`;
-          continue;
-        }
-
-        const li = trimmed.match(/^\*\s+(.+)$/);
-        if (li) {
-          flushPara();
-          if (!inList) {
-            html += "<ul>";
-            inList = true;
-          }
-          html += `<li>${inlineMd(li[1])}</li>`;
-          continue;
-        }
-
-        closeList();
-        para.push(trimmed);
-      }
-      flushPara();
-      closeList();
-      return html;
+    if (typeof marked !== "undefined") {
+      marked.use({ breaks: true, gfm: true });
     }
 
-    function inlineMd(text) {
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    function renderMarkdown(md) {
+      if (!md) return "";
+      if (typeof marked === "undefined") {
+        return `<p>${escapeText(md)}</p>`;
+      }
+      try {
+        return marked.parse(String(md));
+      } catch (_) {
+        return `<p>${escapeText(md)}</p>`;
+      }
     }
 
     function escapeText(text) {
