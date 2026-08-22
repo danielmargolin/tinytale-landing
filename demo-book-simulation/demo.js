@@ -26,6 +26,13 @@ const CONTROLS_INSET = 0;
 /** Canvas height as a fraction of width — tighter than the in-app 1.05 for embeds. */
 const BOOK_PANEL_HEIGHT_RATIO = 0.78;
 
+function isMobileLayout() {
+  return (
+    window.innerWidth <= 800 ||
+    window.matchMedia("(pointer: coarse)").matches
+  );
+}
+
 const white = new THREE.Color("white");
 const emissive = new THREE.Color("orange");
 
@@ -337,7 +344,7 @@ async function main() {
   });
 
   const scene = new THREE.Scene();
-  const isDesktop = window.innerWidth > 800;
+  const isDesktop = !isMobileLayout();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   // Match BookSimulator Canvas + OrbitControls (target 0,0,0).
   camera.position.set(0, -0.35, isDesktop ? 3.2 : 3);
@@ -431,6 +438,13 @@ async function main() {
   });
 
   function resize() {
+    if (isMobileLayout()) {
+      sheets.forEach((s) => {
+        s.highlighted = false;
+      });
+      renderer.domElement.style.cursor = "default";
+    }
+
     const w = panel.clientWidth || window.innerWidth;
     const h = Math.max(
       0,
@@ -453,6 +467,14 @@ async function main() {
   refreshUI();
 
   renderer.domElement.addEventListener("pointermove", (e) => {
+    if (isMobileLayout()) {
+      sheets.forEach((s) => {
+        s.highlighted = false;
+      });
+      renderer.domElement.style.cursor = "default";
+      return;
+    }
+
     const rect = renderer.domElement.getBoundingClientRect();
     pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
