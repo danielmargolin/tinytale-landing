@@ -4,8 +4,11 @@
   if (!frame || !iframe) return;
 
   let lastHeight = 0;
-  let drag = null;
+  /** @type {{ track: Element | null, link: Element | null, startX: number, startY: number, scrollStart: number, dragging: boolean } | null} */
+  let gesture = null;
   let suppressClick = false;
+
+  const DRAG_THRESHOLD_PX = 12;
 
   const pickerDoc = () => {
     try {
@@ -68,6 +71,16 @@
     { passive: true },
   );
 
+  const activateTarget = (target) => {
+    if (!target || target.closest(".carousel-arrow")) return;
+    // Cover/perk links must leave the landing page, not navigate inside the iframe.
+    if (target.tagName === "A" && target.href) {
+      window.location.assign(target.href);
+      return;
+    }
+    target.click();
+  };
+
   frame.addEventListener("pointerdown", (event) => {
     if (event.button !== 0 || !isPickerDoc(pickerDoc())) return;
 
@@ -87,15 +100,18 @@
       return;
     }
 
+    const link = el.closest("a, button");
     const track = el.closest(".carousel-track");
-    if (!track) return;
 
-    drag = {
-      track,
+    if (!track && !link) return;
+
+    gesture = {
+      track: track ?? null,
+      link: link && !link.closest(".carousel-arrow") ? link : null,
       startX: event.clientX,
       startY: event.clientY,
-      scrollStart: track.scrollLeft,
-      moved: false,
+      scrollStart: track?.scrollLeft ?? 0,
+      dragging: false,
     };
   });
 
@@ -103,27 +119,42 @@
     const el = hitTest(event.clientX, event.clientY);
     frame.style.cursor = el?.closest("a, button") ? "pointer" : "";
 
-    if (!drag) return;
+    if (!gesture?.track) return;
 
-    const dx = event.clientX - drag.startX;
-    const dy = event.clientY - drag.startY;
-    if (!drag.moved) {
-      if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy)) return;
-      drag.moved = true;
+    const dx = event.clientX - gesture.startX;
+    const dy = event.clientY - gesture.startY;
+    if (!gesture.dragging) {
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      if (absX < DRAG_THRESHOLD_PX || absX <= absY * 1.25) return;
+      gesture.dragging = true;
       frame.setPointerCapture?.(event.pointerId);
     }
 
-    drag.track.scrollLeft = drag.scrollStart - dx;
+    gesture.track.scrollLeft = gesture.scrollStart - dx;
     event.preventDefault();
   });
 
-  const endDrag = () => {
-    if (drag?.moved) suppressClick = true;
-    drag = null;
+  const endGesture = () => {
+    if (!gesture) return;
+
+    const { dragging, link } = gesture;
+    gesture = null;
+
+    if (dragging) {
+      suppressClick = true;
+      return;
+    }
+
+    // Activate on pointerup — more reliable on mobile than waiting for click.
+    if (link) {
+      activateTarget(link);
+      suppressClick = true;
+    }
   };
 
-  frame.addEventListener("pointerup", endDrag);
-  frame.addEventListener("pointercancel", endDrag);
+  frame.addEventListener("pointerup", endGesture);
+  frame.addEventListener("pointercancel", endGesture);
 
   frame.addEventListener("click", (event) => {
     if (suppressClick) {
@@ -132,12 +163,6 @@
     }
     if (!isPickerDoc(pickerDoc())) return;
     const target = hitTest(event.clientX, event.clientY)?.closest("a, button");
-    if (!target || target.closest(".carousel-arrow")) return;
-    // Cover/perk links must leave the landing page, not navigate inside the iframe.
-    if (target.tagName === "A" && target.href) {
-      window.location.assign(target.href);
-      return;
-    }
-    target.click();
+    activateTarget(target);
   });
 })();
