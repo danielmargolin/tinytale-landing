@@ -177,6 +177,7 @@ function createSectionHeader({ title, icon, accessory }) {
 function createPerkButton() {
   const button = document.createElement("a");
   button.className = "perk-button";
+  button.style.display = "none";
   button.href = COPY.signUpUrl;
   if (isEmbedded()) button.target = "_top";
   button.setAttribute("aria-label", COPY.benefitButton);
