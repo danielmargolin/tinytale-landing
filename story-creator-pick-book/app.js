@@ -309,75 +309,46 @@ export async function initBooksPicker(root, options = {}) {
     window.addEventListener("resize", refresh);
 
     if (verticalScrollEl) {
+      // Forward primarily-vertical wheel to the page/scroll parent without
+      // fighting html { scroll-behavior: smooth }. Leave horizontal (and
+      // diagonal once locked) to native track scrolling for momentum.
+      let wheelAxis = null;
+      let wheelAxisResetTimer = 0;
+
+      const scrollVerticalInstant = (deltaY) => {
+        if (
+          verticalScrollEl === document.documentElement ||
+          verticalScrollEl === document.body
+        ) {
+          window.scrollBy({ top: deltaY, behavior: "auto" });
+          return;
+        }
+        verticalScrollEl.scrollBy({ top: deltaY, behavior: "auto" });
+      };
+
       track.addEventListener(
         "wheel",
         (event) => {
           const absX = Math.abs(event.deltaX);
           const absY = Math.abs(event.deltaY);
-          if (absY <= absX) return;
+
+          if (!wheelAxis) {
+            if (absX < 1 && absY < 1) return;
+            wheelAxis = absY > absX ? "y" : "x";
+          }
+
+          window.clearTimeout(wheelAxisResetTimer);
+          wheelAxisResetTimer = window.setTimeout(() => {
+            wheelAxis = null;
+          }, 120);
+
+          if (wheelAxis !== "y") return;
 
           event.preventDefault();
-          event.stopPropagation();
-          verticalScrollEl.scrollTop += event.deltaY;
+          scrollVerticalInstant(event.deltaY);
         },
         { passive: false }
       );
-
-      let pointerStartX = 0;
-      let pointerStartY = 0;
-      let pointerLastY = 0;
-      let pointerAxis = null;
-      let activePointerId = null;
-
-      const resetPointerScroll = (event) => {
-        if (activePointerId == null || event.pointerId !== activePointerId) return;
-        activePointerId = null;
-        pointerAxis = null;
-      };
-
-      track.addEventListener(
-        "pointerdown",
-        (event) => {
-          if (event.pointerType === "mouse" && event.button !== 0) return;
-          activePointerId = event.pointerId;
-          pointerStartX = event.clientX;
-          pointerStartY = event.clientY;
-          pointerLastY = event.clientY;
-          pointerAxis = null;
-        },
-        { passive: true, capture: true }
-      );
-
-      track.addEventListener(
-        "pointermove",
-        (event) => {
-          if (activePointerId == null || event.pointerId !== activePointerId) {
-            return;
-          }
-
-          const deltaX = event.clientX - pointerStartX;
-          const deltaY = event.clientY - pointerStartY;
-
-          if (!pointerAxis) {
-            if (Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
-            pointerAxis = Math.abs(deltaY) > Math.abs(deltaX) ? "y" : "x";
-          }
-
-          if (pointerAxis !== "y") return;
-
-          event.preventDefault();
-          verticalScrollEl.scrollTop += event.clientY - pointerLastY;
-          pointerLastY = event.clientY;
-        },
-        { passive: false, capture: true }
-      );
-
-      track.addEventListener("pointerup", resetPointerScroll, {
-        capture: true,
-      });
-      track.addEventListener("pointercancel", resetPointerScroll, {
-        capture: true,
-      });
     }
 
     if (typeof ResizeObserver !== "undefined") {

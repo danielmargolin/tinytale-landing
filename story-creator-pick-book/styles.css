@@ -248,7 +248,9 @@ html.is-embedded .books-picker .scroll-view {
   gap: var(--books-picker-gap);
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
+  /* Keep auto so trackpad/touch stay native; arrows still use JS smooth scroll. */
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   width: 100%;
   align-items: flex-start;
