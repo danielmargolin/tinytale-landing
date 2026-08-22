@@ -15,29 +15,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
-    <script>
-      try {
-        if (window.self !== window.top) {
-          document.documentElement.classList.add("is-embedded");
-        }
-      } catch {
-        document.documentElement.classList.add("is-embedded");
-      }
-    </script>
   </head>
-  <body>
-    <div class="page">
-      <div class="content">
-        <div class="scroll-shell">
-          <div class="scroll-fade scroll-fade-top" id="fade-top" hidden></div>
-          <div class="scroll-fade scroll-fade-bottom" id="fade-bottom" hidden></div>
-          <div class="scroll-view" id="scroll-view">
-            <div class="scroll-content" id="sections"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <body class="books-picker-standalone">
+    <div id="books-picker-root"></div>
     <script src="./app.js" type="module"></script>
   </body>
 </html>

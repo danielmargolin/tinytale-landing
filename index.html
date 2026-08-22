@@ -23,7 +23,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="story-creator-pick-book/styles.css" />
     <link rel="stylesheet" href="legal-modal.css" />
     <link rel="stylesheet" href="cookie-consent.css" />
     <link rel="icon" type="image/png" href="tinytale-icon-logo.png" />
@@ -99,9 +101,7 @@
                     ספרים שנכתבו ואוירו בידי סופרים ומאיירים מקצועיים - בחרו אחד, והם ייכנסו לתוכו
                 </p>
                 <div class="books-picker-frame">
-                    <iframe class="books-picker-frame__iframe" src="story-creator-pick-book/"
-                        title="בחירת ספר מתוך הספרייה" loading="lazy" scrolling="no"
-                        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    <div id="books-picker" class="books-picker-frame__root"></div>
                 </div>
             </div>
         </section>
@@ -345,7 +345,7 @@
         </div>
     </aside>
 
-    <script src="books-picker-frame.js"></script>
+    <script type="module" src="books-picker.js"></script>
     <script src="magic-highlight.js"></script>
     <script src="reviews-carousel.js"></script>
     <script src="header.js"></script>

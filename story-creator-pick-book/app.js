@@ -1,63 +1,9 @@
 const TEMPLATES_API_URL =
   "https://tiny-tale-backend-production.up.railway.app/v1/templates?language=he";
 const TEMPLATES_PROXY_URL = "/api/templates";
-const TEMPLATES_LOCAL_URL = "./templates.json";
 const TINYTALE_AUTHOR = "TinyTale";
 const FALLBACK_COVER = "https://placehold.co/300x320.png";
 const EMBED_MESSAGE_SOURCE = "tinytale-books-picker";
-
-function isEmbedded() {
-  try {
-    return window.self !== window.top;
-  } catch {
-    return true;
-  }
-}
-
-function postEmbedMessage(payload) {
-  if (!isEmbedded()) return;
-  window.parent.postMessage(
-    { source: EMBED_MESSAGE_SOURCE, ...payload },
-    "*"
-  );
-}
-
-function reportEmbedHeight() {
-  const page = document.querySelector(".page");
-  const sections = document.getElementById("sections");
-  const height = Math.ceil(
-    Math.max(
-      page?.getBoundingClientRect().height ?? 0,
-      sections?.scrollHeight ?? 0
-    )
-  );
-  if (height <= 0) return;
-  postEmbedMessage({ type: "resize", height });
-}
-
-function setupEmbedHost() {
-  if (!isEmbedded()) return;
-
-  document.documentElement.classList.add("is-embedded");
-
-  const observer = new ResizeObserver(reportEmbedHeight);
-  const page = document.querySelector(".page");
-  const sections = document.getElementById("sections");
-  if (page) observer.observe(page);
-  if (sections) observer.observe(sections);
-
-  window.addEventListener("load", reportEmbedHeight);
-  reportEmbedHeight();
-}
-
-function preferMobilePreview() {
-  return window.matchMedia("(max-width: 767px)").matches;
-}
-
-function bookPreviewUrl(templateId) {
-  const variant = preferMobilePreview() ? "mobile" : "desktop";
-  return `./${variant}/template-book.html?id=${encodeURIComponent(templateId)}`;
-}
 
 const COPY = {
   tinyTaleSection: "סיפורי הבית",
@@ -65,6 +11,18 @@ const COPY = {
   benefitButton: "מגיעה לך הטבה",
   signUpUrl: "https://tinytaleapp.com/sign-up",
 };
+
+function isEmbeddedFrame() {
+  try {
+    return window.self !== window.top;
+  } catch {
+    return true;
+  }
+}
+
+function preferMobilePreview() {
+  return window.matchMedia("(max-width: 767px)").matches;
+}
 
 function isTinyTaleAuthor(authorName) {
   return authorName?.trim().toLowerCase() === TINYTALE_AUTHOR.toLowerCase();
@@ -87,295 +45,6 @@ function formatTargetAgeRange(range) {
   return `${range[0]}-${range[range.length - 1]}`;
 }
 
-function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
-  const link = document.createElement("a");
-  link.className = "cover";
-  link.href = bookPreviewUrl(template.id);
-  if (isEmbedded()) link.target = "_top";
-  link.style.setProperty("--cover-scale", String(coverScale));
-  link.setAttribute("aria-label", template.title);
-
-  const media = document.createElement("div");
-  media.className = "cover-media";
-
-  const img = document.createElement("img");
-  img.className = "cover-image";
-  img.alt = template.title;
-  img.loading = "lazy";
-  img.src = template.cover_photo || FALLBACK_COVER;
-
-  const pending = document.createElement("div");
-  pending.className = "cover-pending";
-  pending.textContent = "Loading";
-
-  img.addEventListener("load", () => pending.remove());
-  img.addEventListener("error", () => {
-    pending.className = "cover-error";
-    pending.textContent = "Error";
-    img.src = FALLBACK_COVER;
-  });
-
-  media.append(img, pending);
-
-  const ageRangeLabel = formatTargetAgeRange(template.target_age_range);
-  if (ageRangeLabel) {
-    const ageTag = document.createElement("div");
-    ageTag.className = "cover-age-tag";
-    ageTag.textContent = ageRangeLabel;
-    media.appendChild(ageTag);
-  }
-
-  const titleBlock = document.createElement("div");
-  titleBlock.className = "cover-title-block";
-
-  if (template.title) {
-    const title = document.createElement("p");
-    title.className = "cover-title";
-    title.textContent = template.title;
-    titleBlock.appendChild(title);
-  }
-
-  if (showAuthorName && template.authorName) {
-    const author = document.createElement("p");
-    author.className = "cover-author";
-    author.textContent = template.authorName;
-    titleBlock.appendChild(author);
-  }
-
-  link.append(media, titleBlock);
-  return link;
-}
-
-function createSectionHeader({ title, icon, accessory }) {
-  const header = document.createElement("div");
-  header.className = "section-header";
-
-  const titleGroup = document.createElement("div");
-  titleGroup.className = "section-header-title-group";
-
-  if (icon) {
-    const iconEl = document.createElement("span");
-    iconEl.className = `section-icon section-icon--${icon}`;
-    iconEl.setAttribute("aria-hidden", "true");
-    const material = document.createElement("span");
-    material.className = "material-icons";
-    material.textContent = icon;
-    iconEl.appendChild(material);
-    titleGroup.appendChild(iconEl);
-  }
-
-  const heading = document.createElement("h2");
-  heading.className = "section-title";
-  heading.textContent = title;
-  titleGroup.appendChild(heading);
-
-  header.appendChild(titleGroup);
-  if (accessory) header.appendChild(accessory);
-  return header;
-}
-
-function createPerkButton() {
-  const button = document.createElement("a");
-  button.className = "perk-button";
-  button.style.display = "none";
-  button.href = COPY.signUpUrl;
-  if (isEmbedded()) button.target = "_top";
-  button.setAttribute("aria-label", COPY.benefitButton);
-
-  const icon = document.createElement("span");
-  icon.className = "material-icons";
-  icon.setAttribute("aria-hidden", "true");
-  icon.textContent = "redeem";
-
-  const label = document.createElement("span");
-  label.textContent = COPY.benefitButton;
-
-  button.append(icon, label);
-  return button;
-}
-
-function updateCarouselChrome(track, fadeLeft, fadeRight, arrowLeft, arrowRight) {
-  // Measure overflow from child boxes so RTL scrollLeft differences
-  // across browsers don't keep both arrows visible.
-  const trackRect = track.getBoundingClientRect();
-  let minLeft = trackRect.left;
-  let maxRight = trackRect.right;
-
-  for (const child of track.children) {
-    const rect = child.getBoundingClientRect();
-    minLeft = Math.min(minLeft, rect.left);
-    maxRight = Math.max(maxRight, rect.right);
-  }
-
-  const showLeft = trackRect.left - minLeft > 1;
-  const showRight = maxRight - trackRect.right > 1;
-
-  fadeLeft.hidden = !showLeft;
-  arrowLeft.hidden = !showLeft;
-  fadeRight.hidden = !showRight;
-  arrowRight.hidden = !showRight;
-}
-
-function createCarousel(templates, { showAuthorName, coverScale, verticalScrollEl }) {
-  const carousel = document.createElement("div");
-  carousel.className = "carousel";
-
-  const track = document.createElement("div");
-  track.className = "carousel-track";
-
-  for (const template of templates) {
-    track.appendChild(createCover(template, { showAuthorName, coverScale }));
-  }
-
-  const fadeLeft = document.createElement("div");
-  fadeLeft.className = "carousel-fade carousel-fade--left";
-  fadeLeft.hidden = true;
-
-  const fadeRight = document.createElement("div");
-  fadeRight.className = "carousel-fade carousel-fade--right";
-  fadeRight.hidden = true;
-
-  const arrowLeft = document.createElement("button");
-  arrowLeft.type = "button";
-  arrowLeft.className = "carousel-arrow carousel-arrow--left";
-  arrowLeft.setAttribute("aria-label", "גלול שמאלה");
-  arrowLeft.hidden = true;
-  arrowLeft.innerHTML = '<span class="material-icons">chevron_left</span>';
-
-  const arrowRight = document.createElement("button");
-  arrowRight.type = "button";
-  arrowRight.className = "carousel-arrow carousel-arrow--right";
-  arrowRight.setAttribute("aria-label", "גלול ימינה");
-  arrowRight.hidden = true;
-  arrowRight.innerHTML = '<span class="material-icons">chevron_right</span>';
-
-  const scrollByPage = (direction) => {
-    const amount = (track.clientWidth || 200) * 0.8;
-    // Positive left always moves toward the physical right.
-    const delta = direction === "right" ? amount : -amount;
-    track.scrollBy({ left: delta, behavior: "smooth" });
-  };
-
-  const bindArrow = (button, direction) => {
-    const stop = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
-    // Capture early so cover <a> links underneath never see the interaction.
-    for (const type of ["mousedown", "touchstart", "click"]) {
-      button.addEventListener(type, stop, true);
-    }
-
-    // Scroll once per press; also stop propagation here.
-    button.addEventListener(
-      "pointerdown",
-      (event) => {
-        stop(event);
-        if (event.button != null && event.button !== 0) return;
-        scrollByPage(direction);
-      },
-      true
-    );
-  };
-
-  bindArrow(arrowLeft, "left");
-  bindArrow(arrowRight, "right");
-
-  const refresh = () =>
-    updateCarouselChrome(track, fadeLeft, fadeRight, arrowLeft, arrowRight);
-
-  track.addEventListener("scroll", refresh, { passive: true });
-  window.addEventListener("resize", refresh);
-
-  // Nested horizontal ScrollView shouldn't eat vertical wheel/trackpad scrolls —
-  // forward them to the parent GradientScrollView-equivalent.
-  if (verticalScrollEl) {
-    track.addEventListener(
-      "wheel",
-      (event) => {
-        const absX = Math.abs(event.deltaX);
-        const absY = Math.abs(event.deltaY);
-        if (absY <= absX) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-        verticalScrollEl.scrollTop += event.deltaY;
-      },
-      { passive: false }
-    );
-  }
-
-  // Covers load async and change scrollWidth — refresh arrow chrome after layout.
-  if (typeof ResizeObserver !== "undefined") {
-    const observer = new ResizeObserver(refresh);
-    observer.observe(track);
-    for (const child of track.children) observer.observe(child);
-  }
-  requestAnimationFrame(refresh);
-
-  carousel.append(track, fadeLeft, fadeRight, arrowLeft, arrowRight);
-  return carousel;
-}
-
-function createGrid(templates, { showAuthorName }) {
-  const grid = document.createElement("div");
-  grid.className = "grid";
-  for (const template of templates) {
-    grid.appendChild(createCover(template, { showAuthorName, coverScale: 1 }));
-  }
-  return grid;
-}
-
-function createSection({
-  title,
-  icon,
-  templates,
-  showAuthorName = true,
-  horizontal = false,
-  coverScale = 1,
-  accessory = null,
-  verticalScrollEl = null,
-}) {
-  if (!templates.length) return null;
-
-  const section = document.createElement("section");
-  section.className = "section";
-  section.appendChild(createSectionHeader({ title, icon, accessory }));
-
-  if (horizontal) {
-    section.appendChild(
-      createCarousel(templates, {
-        showAuthorName,
-        coverScale,
-        verticalScrollEl,
-      })
-    );
-  } else {
-    section.appendChild(createGrid(templates, { showAuthorName }));
-  }
-
-  return section;
-}
-
-function setupScrollFades(scrollView) {
-  const fadeTop = document.getElementById("fade-top");
-  const fadeBottom = document.getElementById("fade-bottom");
-
-  const update = () => {
-    const { scrollTop, scrollHeight, clientHeight } = scrollView;
-    const canScroll = scrollHeight > clientHeight + 2;
-    fadeTop.hidden = !(canScroll && scrollTop > 2);
-    fadeBottom.hidden = !(
-      canScroll && scrollTop < scrollHeight - clientHeight - 2
-    );
-  };
-
-  scrollView.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  requestAnimationFrame(update);
-}
-
 async function fetchTemplates(url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -385,22 +54,397 @@ async function fetchTemplates(url) {
   return data.templates ?? [];
 }
 
-async function loadTemplates() {
-  for (const url of [TEMPLATES_API_URL, TEMPLATES_PROXY_URL, TEMPLATES_LOCAL_URL]) {
-    try {
-      return await fetchTemplates(url);
-    } catch {
-      // try the next source
+/**
+ * @param {HTMLElement} root
+ * @param {{ basePath?: string, mode?: "standalone" | "inline" | "iframe" }} [options]
+ */
+export async function initBooksPicker(root, options = {}) {
+  if (!root) throw new Error("initBooksPicker: root element is required");
+
+  const basePath = (options.basePath ?? "./").replace(/\/?$/, "/");
+  const mode =
+    options.mode ?? (isEmbeddedFrame() ? "iframe" : "standalone");
+  const openLinksInTop = mode === "iframe";
+
+  const templatesLocalUrl = `${basePath}templates.json`;
+
+  const postEmbedMessage = (payload) => {
+    if (mode !== "iframe") return;
+    window.parent.postMessage(
+      { source: EMBED_MESSAGE_SOURCE, ...payload },
+      "*"
+    );
+  };
+
+  const reportEmbedHeight = () => {
+    if (mode !== "iframe") return;
+    const height = Math.ceil(root.getBoundingClientRect().height);
+    if (height <= 0) return;
+    postEmbedMessage({ type: "resize", height });
+  };
+
+  const bookPreviewUrl = (templateId) => {
+    const variant = preferMobilePreview() ? "mobile" : "desktop";
+    return `${basePath}${variant}/template-book.html?id=${encodeURIComponent(templateId)}`;
+  };
+
+  async function loadTemplates() {
+    for (const url of [
+      TEMPLATES_API_URL,
+      TEMPLATES_PROXY_URL,
+      templatesLocalUrl,
+    ]) {
+      try {
+        return await fetchTemplates(url);
+      } catch {
+        // try the next source
+      }
     }
+    throw new Error("Failed to load templates from all sources");
   }
-  throw new Error("Failed to load templates from all sources");
-}
 
-async function main() {
-  setupEmbedHost();
+  function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
+    const link = document.createElement("a");
+    link.className = "cover";
+    link.href = bookPreviewUrl(template.id);
+    if (openLinksInTop) link.target = "_top";
+    link.style.setProperty("--cover-scale", String(coverScale));
+    link.setAttribute("aria-label", template.title);
 
-  const sectionsEl = document.getElementById("sections");
-  const scrollView = document.getElementById("scroll-view");
+    const media = document.createElement("div");
+    media.className = "cover-media";
+
+    const img = document.createElement("img");
+    img.className = "cover-image";
+    img.alt = template.title;
+    img.loading = "lazy";
+    img.src = template.cover_photo || FALLBACK_COVER;
+
+    const pending = document.createElement("div");
+    pending.className = "cover-pending";
+    pending.textContent = "Loading";
+
+    img.addEventListener("load", () => pending.remove());
+    img.addEventListener("error", () => {
+      pending.className = "cover-error";
+      pending.textContent = "Error";
+      img.src = FALLBACK_COVER;
+    });
+
+    media.append(img, pending);
+
+    const ageRangeLabel = formatTargetAgeRange(template.target_age_range);
+    if (ageRangeLabel) {
+      const ageTag = document.createElement("div");
+      ageTag.className = "cover-age-tag";
+      ageTag.textContent = ageRangeLabel;
+      media.appendChild(ageTag);
+    }
+
+    const titleBlock = document.createElement("div");
+    titleBlock.className = "cover-title-block";
+
+    if (template.title) {
+      const title = document.createElement("p");
+      title.className = "cover-title";
+      title.textContent = template.title;
+      titleBlock.appendChild(title);
+    }
+
+    if (showAuthorName && template.authorName) {
+      const author = document.createElement("p");
+      author.className = "cover-author";
+      author.textContent = template.authorName;
+      titleBlock.appendChild(author);
+    }
+
+    link.append(media, titleBlock);
+    return link;
+  }
+
+  function createSectionHeader({ title, icon, accessory }) {
+    const header = document.createElement("div");
+    header.className = "section-header";
+
+    const titleGroup = document.createElement("div");
+    titleGroup.className = "section-header-title-group";
+
+    if (icon) {
+      const iconEl = document.createElement("span");
+      iconEl.className = `section-icon section-icon--${icon}`;
+      iconEl.setAttribute("aria-hidden", "true");
+      const material = document.createElement("span");
+      material.className = "material-icons";
+      material.textContent = icon;
+      iconEl.appendChild(material);
+      titleGroup.appendChild(iconEl);
+    }
+
+    const heading = document.createElement("h2");
+    heading.className = "section-title";
+    heading.textContent = title;
+    titleGroup.appendChild(heading);
+
+    header.appendChild(titleGroup);
+    if (accessory) header.appendChild(accessory);
+    return header;
+  }
+
+  function createPerkButton() {
+    const button = document.createElement("a");
+    button.className = "perk-button";
+    button.style.display = "none";
+    button.href = COPY.signUpUrl;
+    if (openLinksInTop) button.target = "_top";
+    button.setAttribute("aria-label", COPY.benefitButton);
+
+    const icon = document.createElement("span");
+    icon.className = "material-icons";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "redeem";
+
+    const label = document.createElement("span");
+    label.textContent = COPY.benefitButton;
+
+    button.append(icon, label);
+    return button;
+  }
+
+  function updateCarouselChrome(
+    track,
+    fadeLeft,
+    fadeRight,
+    arrowLeft,
+    arrowRight
+  ) {
+    const trackRect = track.getBoundingClientRect();
+    let minLeft = trackRect.left;
+    let maxRight = trackRect.right;
+
+    for (const child of track.children) {
+      const rect = child.getBoundingClientRect();
+      minLeft = Math.min(minLeft, rect.left);
+      maxRight = Math.max(maxRight, rect.right);
+    }
+
+    const showLeft = trackRect.left - minLeft > 1;
+    const showRight = maxRight - trackRect.right > 1;
+
+    fadeLeft.hidden = !showLeft;
+    arrowLeft.hidden = !showLeft;
+    fadeRight.hidden = !showRight;
+    arrowRight.hidden = !showRight;
+  }
+
+  function createCarousel(
+    templates,
+    { showAuthorName, coverScale, verticalScrollEl }
+  ) {
+    const carousel = document.createElement("div");
+    carousel.className = "carousel";
+
+    const track = document.createElement("div");
+    track.className = "carousel-track";
+
+    for (const template of templates) {
+      track.appendChild(createCover(template, { showAuthorName, coverScale }));
+    }
+
+    const fadeLeft = document.createElement("div");
+    fadeLeft.className = "carousel-fade carousel-fade--left";
+    fadeLeft.hidden = true;
+
+    const fadeRight = document.createElement("div");
+    fadeRight.className = "carousel-fade carousel-fade--right";
+    fadeRight.hidden = true;
+
+    const arrowLeft = document.createElement("button");
+    arrowLeft.type = "button";
+    arrowLeft.className = "carousel-arrow carousel-arrow--left";
+    arrowLeft.setAttribute("aria-label", "גלול שמאלה");
+    arrowLeft.hidden = true;
+    arrowLeft.innerHTML = '<span class="material-icons">chevron_left</span>';
+
+    const arrowRight = document.createElement("button");
+    arrowRight.type = "button";
+    arrowRight.className = "carousel-arrow carousel-arrow--right";
+    arrowRight.setAttribute("aria-label", "גלול ימינה");
+    arrowRight.hidden = true;
+    arrowRight.innerHTML = '<span class="material-icons">chevron_right</span>';
+
+    const scrollByPage = (direction) => {
+      const amount = (track.clientWidth || 200) * 0.8;
+      const delta = direction === "right" ? amount : -amount;
+      track.scrollBy({ left: delta, behavior: "smooth" });
+    };
+
+    const bindArrow = (button, direction) => {
+      const stop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+      for (const type of ["mousedown", "touchstart", "click"]) {
+        button.addEventListener(type, stop, true);
+      }
+
+      button.addEventListener(
+        "pointerdown",
+        (event) => {
+          stop(event);
+          if (event.button != null && event.button !== 0) return;
+          scrollByPage(direction);
+        },
+        true
+      );
+    };
+
+    bindArrow(arrowLeft, "left");
+    bindArrow(arrowRight, "right");
+
+    const refresh = () =>
+      updateCarouselChrome(track, fadeLeft, fadeRight, arrowLeft, arrowRight);
+
+    track.addEventListener("scroll", refresh, { passive: true });
+    window.addEventListener("resize", refresh);
+
+    if (verticalScrollEl) {
+      track.addEventListener(
+        "wheel",
+        (event) => {
+          const absX = Math.abs(event.deltaX);
+          const absY = Math.abs(event.deltaY);
+          if (absY <= absX) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          verticalScrollEl.scrollTop += event.deltaY;
+        },
+        { passive: false }
+      );
+    }
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(refresh);
+      observer.observe(track);
+      for (const child of track.children) observer.observe(child);
+    }
+    requestAnimationFrame(refresh);
+
+    carousel.append(track, fadeLeft, fadeRight, arrowLeft, arrowRight);
+    return carousel;
+  }
+
+  function createGrid(templates, { showAuthorName }) {
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    for (const template of templates) {
+      grid.appendChild(createCover(template, { showAuthorName, coverScale: 1 }));
+    }
+    return grid;
+  }
+
+  function createSection({
+    title,
+    icon,
+    templates,
+    showAuthorName = true,
+    horizontal = false,
+    coverScale = 1,
+    accessory = null,
+    verticalScrollEl = null,
+  }) {
+    if (!templates.length) return null;
+
+    const section = document.createElement("section");
+    section.className = "section";
+    section.appendChild(createSectionHeader({ title, icon, accessory }));
+
+    if (horizontal) {
+      section.appendChild(
+        createCarousel(templates, {
+          showAuthorName,
+          coverScale,
+          verticalScrollEl,
+        })
+      );
+    } else {
+      section.appendChild(createGrid(templates, { showAuthorName }));
+    }
+
+    return section;
+  }
+
+  function setupScrollFades(scrollView) {
+    const fadeTop = root.querySelector("#fade-top");
+    const fadeBottom = root.querySelector("#fade-bottom");
+    if (!fadeTop || !fadeBottom) return;
+
+    const update = () => {
+      const { scrollTop, scrollHeight, clientHeight } = scrollView;
+      const canScroll = scrollHeight > clientHeight + 2;
+      fadeTop.hidden = !(canScroll && scrollTop > 2);
+      fadeBottom.hidden = !(
+        canScroll && scrollTop < scrollHeight - clientHeight - 2
+      );
+    };
+
+    scrollView.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    requestAnimationFrame(update);
+  }
+
+  function buildShell() {
+    root.classList.add("books-picker");
+    root.classList.add(`books-picker--${mode}`);
+
+    if (mode === "standalone") {
+      root.innerHTML = `
+        <div class="page">
+          <div class="content">
+            <div class="scroll-shell">
+              <div class="scroll-fade scroll-fade-top" id="fade-top" hidden></div>
+              <div class="scroll-fade scroll-fade-bottom" id="fade-bottom" hidden></div>
+              <div class="scroll-view" id="scroll-view">
+                <div class="scroll-content" id="sections"></div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      return {
+        sectionsEl: root.querySelector("#sections"),
+        scrollView: root.querySelector("#scroll-view"),
+        verticalScrollEl: root.querySelector("#scroll-view"),
+      };
+    }
+
+    // Same shell as the landing-page iframe embed (page → content → sections).
+    root.innerHTML = `
+      <div class="page">
+        <div class="content">
+          <div class="scroll-shell">
+            <div class="scroll-view">
+              <div class="scroll-content" id="sections"></div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    return {
+      sectionsEl: root.querySelector("#sections"),
+      scrollView: null,
+      verticalScrollEl:
+        mode === "inline" ? document.documentElement : null,
+    };
+  }
+
+  if (mode === "iframe") {
+    document.documentElement.classList.add("is-embedded");
+    const observer = new ResizeObserver(reportEmbedHeight);
+    observer.observe(root);
+    window.addEventListener("load", reportEmbedHeight);
+  }
+
+  const { sectionsEl, scrollView, verticalScrollEl } = buildShell();
 
   try {
     const templates = await loadTemplates();
@@ -414,7 +458,7 @@ async function main() {
       horizontal: true,
       coverScale: 0.82,
       accessory: createPerkButton(),
-      verticalScrollEl: isEmbedded() ? null : scrollView,
+      verticalScrollEl,
     });
 
     const authorsSection = createSection({
@@ -428,7 +472,8 @@ async function main() {
     sectionsEl.replaceChildren(
       ...[houseSection, authorsSection].filter(Boolean)
     );
-    if (!isEmbedded()) setupScrollFades(scrollView);
+
+    if (scrollView) setupScrollFades(scrollView);
     reportEmbedHeight();
   } catch (error) {
     const banner = document.createElement("div");
@@ -441,4 +486,9 @@ async function main() {
   }
 }
 
-main();
+if (document.currentScript?.type === "module") {
+  const root = document.getElementById("books-picker-root");
+  if (root) {
+    initBooksPicker(root, { mode: "standalone", basePath: "./" });
+  }
+}

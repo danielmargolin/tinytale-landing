@@ -1435,17 +1435,12 @@ body {
 .books-picker-frame {
   width: min(100%, 48rem);
   margin-inline: auto;
-  touch-action: pan-y;
 }
 
-.books-picker-frame__iframe {
+.books-picker-frame__root {
   display: block;
   width: 100%;
   min-height: 24rem;
-  height: 24rem;
-  border: 0;
-  overflow: hidden;
-  pointer-events: none;
 }
 
 .books-marquee__scroller {

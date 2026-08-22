@@ -1,68 +1,77 @@
-:root {
-  --font: "Noto Sans Hebrew", sans-serif;
-  --bg: #ffffff;
-  --text: #222222;
-  --author: #6b7280;
-  --primary: #504df2;
-  --primary-shadow: rgba(80, 77, 242, 0.35);
-  --gap: 16px;
-  --max-width: 700px;
-  --cols: 2;
-}
-
-*,
-*::before,
-*::after {
+.books-picker,
+.books-picker *,
+.books-picker *::before,
+.books-picker *::after {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  tap-highlight-color: transparent;
 }
 
-:focus:not(:focus-visible) {
+.books-picker {
+  --books-picker-font: "Noto Sans Hebrew", sans-serif;
+  --books-picker-bg: #ffffff;
+  --books-picker-text: #222222;
+  --books-picker-author: #6b7280;
+  --books-picker-primary: #504df2;
+  --books-picker-primary-shadow: rgba(80, 77, 242, 0.35);
+  --books-picker-gap: 16px;
+  --books-picker-max-width: 700px;
+  --books-picker-cols: 2;
+  width: 100%;
+  color: var(--books-picker-text);
+  font-family: var(--books-picker-font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.books-picker :focus:not(:focus-visible) {
   outline: none;
 }
 
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+.books-picker button::-moz-focus-inner,
+.books-picker input::-moz-focus-inner {
   border: 0;
 }
 
-html,
-body {
+body.books-picker-standalone {
   margin: 0;
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
   height: 100dvh;
   overflow: hidden;
+  background: var(--books-picker-bg, #ffffff);
+  color: var(--books-picker-text, #222222);
+  font-family: var(--books-picker-font, "Noto Sans Hebrew", sans-serif);
 }
 
-.page {
+body.books-picker-standalone .books-picker {
+  height: 100%;
+}
+
+.books-picker .page {
   height: 100%;
   display: flex;
   justify-content: center;
+  min-height: 0;
   padding: 5px;
-  background: var(--bg);
+  padding-top: 5px;
+  background: var(--books-picker-bg);
   overflow: hidden;
 }
 
-.content {
+.books-picker .content {
   width: 100%;
-  max-width: var(--max-width);
+  max-width: var(--books-picker-max-width);
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 0;
   overflow: hidden;
+  flex: none;
+  position: static;
+  padding: 0;
+  gap: 0;
+  grid-template-columns: unset;
 }
 
-.scroll-shell {
+.books-picker .scroll-shell {
   position: relative;
   flex: 1;
   width: 100%;
@@ -71,7 +80,7 @@ body {
   flex-direction: column;
 }
 
-.scroll-view {
+.books-picker .scroll-view {
   flex: 1;
   min-height: 0;
   width: 100%;
@@ -82,11 +91,11 @@ body {
   overscroll-behavior-y: contain;
 }
 
-.scroll-view::-webkit-scrollbar {
+.books-picker .scroll-view::-webkit-scrollbar {
   display: none;
 }
 
-.scroll-content {
+.books-picker .scroll-content {
   margin: 16px;
   padding-bottom: 36px;
   display: flex;
@@ -95,7 +104,22 @@ body {
   align-items: stretch;
 }
 
-.scroll-fade {
+/* Inline on landing page + external iframe embed: flat layout, no inner scroll. */
+.books-picker--inline .page,
+.books-picker--inline .content,
+.books-picker--inline .scroll-shell,
+.books-picker--inline .scroll-view,
+html.is-embedded .books-picker .page,
+html.is-embedded .books-picker .content,
+html.is-embedded .books-picker .scroll-shell,
+html.is-embedded .books-picker .scroll-view {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  flex: none;
+}
+
+.books-picker .scroll-fade {
   position: absolute;
   left: 0;
   right: 0;
@@ -104,7 +128,7 @@ body {
   pointer-events: none;
 }
 
-.scroll-fade-top {
+.books-picker .scroll-fade-top {
   top: 0;
   background: linear-gradient(
     to bottom,
@@ -113,7 +137,7 @@ body {
   );
 }
 
-.scroll-fade-bottom {
+.books-picker .scroll-fade-bottom {
   bottom: 0;
   background: linear-gradient(
     to top,
@@ -122,21 +146,25 @@ body {
   );
 }
 
-.section {
+.books-picker .section {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 14px;
+  padding: 0;
+  text-align: start;
+  background: none;
 }
 
-.section-header {
+.books-picker .section-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 15px;
 }
 
-.section-header-title-group {
+.books-picker .section-header-title-group {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -145,7 +173,7 @@ body {
   min-width: 0;
 }
 
-.section-icon {
+.books-picker .section-icon {
   width: 32px;
   height: 32px;
   border-radius: 16px;
@@ -155,67 +183,69 @@ body {
   flex-shrink: 0;
 }
 
-.section-icon .material-icons {
+.books-picker .section-icon .material-icons {
   font-size: 18px;
 }
 
-.section-icon--home {
+.books-picker .section-icon--home {
   background: #e6f9f6;
   color: #0fb29f;
 }
 
-.section-icon--star {
+.books-picker .section-icon--star {
   background: #fef9ec;
   color: #d97706;
 }
 
-.section-title {
+.books-picker .section-title {
   margin: 0;
+  max-width: none;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.3px;
-  color: var(--text);
+  color: var(--books-picker-text);
+  line-height: 1.35;
 }
 
-.perk-button {
+.books-picker .perk-button {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   gap: 6px;
-  background: var(--primary);
+  background: var(--books-picker-primary);
   color: #fff;
   padding: 8px 14px;
   border-radius: 999px;
   border: 0;
   text-decoration: none;
-  box-shadow: 0 4px 12px var(--primary-shadow);
+  box-shadow: 0 4px 12px var(--books-picker-primary-shadow);
   flex-shrink: 0;
   cursor: pointer;
-  font-family: var(--font);
+  font-family: var(--books-picker-font);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.2px;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-.perk-button .material-icons {
+.books-picker .perk-button .material-icons {
   font-size: 16px;
 }
 
-.perk-button:active {
+.books-picker .perk-button:active {
   transform: scale(0.97);
   box-shadow: 0 2px 6px rgba(80, 77, 242, 0.3);
 }
 
-.carousel {
+.books-picker .carousel {
   position: relative;
   width: 100%;
 }
 
-.carousel-track {
+.books-picker .carousel-track {
   display: flex;
   flex-direction: row;
-  gap: var(--gap);
+  gap: var(--books-picker-gap);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -223,16 +253,15 @@ body {
   width: 100%;
   align-items: flex-start;
   padding-bottom: 4px;
-  /* Nested like SimpleCarousel: keep horizontal scroll, don't trap vertical page scroll */
   overscroll-behavior-x: contain;
   touch-action: pan-x;
 }
 
-.carousel-track::-webkit-scrollbar {
+.books-picker .carousel-track::-webkit-scrollbar {
   display: none;
 }
 
-.carousel-fade {
+.books-picker .carousel-fade {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -241,7 +270,7 @@ body {
   pointer-events: none;
 }
 
-.carousel-fade--left {
+.books-picker .carousel-fade--left {
   left: -1px;
   background: linear-gradient(
     to right,
@@ -250,7 +279,7 @@ body {
   );
 }
 
-.carousel-fade--right {
+.books-picker .carousel-fade--right {
   right: -1px;
   background: linear-gradient(
     to left,
@@ -259,7 +288,7 @@ body {
   );
 }
 
-.carousel-arrow {
+.books-picker .carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-35px);
@@ -281,45 +310,46 @@ body {
   touch-action: manipulation;
 }
 
-/* Author `display` would otherwise override the [hidden] UA rule. */
-.carousel-arrow[hidden],
-.carousel-fade[hidden] {
+.books-picker .carousel-arrow[hidden],
+.books-picker .carousel-fade[hidden] {
   display: none !important;
 }
 
-.carousel-arrow:active {
+.books-picker .carousel-arrow:active {
   transform: translateY(-35px) scale(0.94);
 }
 
-.carousel-arrow--left {
+.books-picker .carousel-arrow--left {
   left: 8px;
 }
 
-.carousel-arrow--right {
+.books-picker .carousel-arrow--right {
   right: 8px;
 }
 
-.carousel-arrow .material-icons {
+.books-picker .carousel-arrow .material-icons {
   font-size: 24px;
   pointer-events: none;
   user-select: none;
 }
 
-.grid {
+.books-picker .grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--gap);
+  gap: var(--books-picker-gap);
   row-gap: 3px;
   width: 100%;
 }
 
-.cover {
+.books-picker .cover {
   flex: 0 0 auto;
   flex-shrink: 0;
   width: calc(
-    ((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)) * var(--cover-scale, 1)
+    ((100% - (var(--books-picker-cols) - 1) * var(--books-picker-gap)) /
+      var(--books-picker-cols)) *
+      var(--cover-scale, 1)
   );
   max-width: 100%;
   margin-bottom: 16px;
@@ -332,14 +362,14 @@ body {
   touch-action: manipulation;
 }
 
-.cover-media {
+.books-picker .cover-media {
   position: relative;
   width: 100%;
   border-radius: 25px;
   overflow: hidden;
 }
 
-.cover-image {
+.books-picker .cover-image {
   display: block;
   width: 100%;
   min-height: 190px;
@@ -349,8 +379,8 @@ body {
   background: #e0e0e0;
 }
 
-.cover-pending,
-.cover-error {
+.books-picker .cover-pending,
+.books-picker .cover-error {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -365,8 +395,7 @@ body {
   border-radius: 20px;
 }
 
-/* Mirrors TemplateCover ageTag (bottom-left over cover image) */
-.cover-age-tag {
+.books-picker .cover-age-tag {
   position: absolute;
   bottom: 8px;
   left: 5px;
@@ -381,12 +410,12 @@ body {
   pointer-events: none;
 }
 
-.cover-title-block {
+.books-picker .cover-title-block {
   margin-top: 8px;
   text-align: start;
 }
 
-.cover-title {
+.books-picker .cover-title {
   margin: 0;
   font-size: 14px;
   font-weight: 700;
@@ -394,14 +423,14 @@ body {
   line-height: 1.35;
 }
 
-.cover-author {
+.books-picker .cover-author {
   margin: 2px 0 0;
   font-size: 12px;
   font-weight: 400;
-  color: var(--author);
+  color: var(--books-picker-author);
 }
 
-.error-banner {
+.books-picker .error-banner {
   margin: 24px;
   padding: 16px 18px;
   border-radius: 16px;
@@ -412,18 +441,18 @@ body {
 }
 
 @media (min-width: 768px) {
-  :root {
-    --cols: 4;
+  .books-picker {
+    --books-picker-cols: 4;
   }
 }
 
 @media (max-width: 480px) {
-  .scroll-content {
+  .books-picker .scroll-content {
     margin: 12px;
   }
 }
 
-/* Landing-page iframe: size to content so the host page is the only scroller. */
+/* Standalone page loaded in an external iframe (height sync only). */
 html.is-embedded,
 html.is-embedded body {
   height: auto;
@@ -431,16 +460,6 @@ html.is-embedded body {
   overflow: hidden;
 }
 
-html.is-embedded .page,
-html.is-embedded .content,
-html.is-embedded .scroll-shell,
-html.is-embedded .scroll-view {
+html.is-embedded .books-picker {
   height: auto;
-  min-height: 0;
-  overflow: visible;
-  flex: none;
-}
-
-html.is-embedded .scroll-fade {
-  display: none !important;
 }
