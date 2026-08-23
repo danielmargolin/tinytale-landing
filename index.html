@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="story-creator-pick-book/styles.css" />
     <link rel="stylesheet" href="legal-modal.css" />
@@ -141,47 +142,94 @@
                 <!-- <p class="section-subtitle">מה הורים מספרים</p> -->
                 <h2 class="section-title">משפחות מספרות</h2>
             </header>
-            <div class="reviews-carousel" data-reviews-carousel>
-                <article class="review-card review-card--has-media" data-review-card>
-                    <div class="review-card__media" data-review-media>
-                        <video class="review-card__video" data-review-video src="videos/book1.mp4"
-                            poster="videos/book1-poster.jpg" muted loop playsinline autoplay preload="metadata"
-                            controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture
-                            disableremoteplayback aria-label="קטע מהספר המותאם אישית"></video>
-                    </div>
-                    <div class="review-card__body" data-review-body>
-                        <div class="review-card__stars" aria-label="דירוג 5 מתוך 5">
-                            <span aria-hidden="true">★</span>
-                            <span aria-hidden="true">★</span>
-                            <span aria-hidden="true">★</span>
-                            <span aria-hidden="true">★</span>
-                            <span aria-hidden="true">★</span>
-                        </div>
-                        <blockquote class="review-card__quote" data-review-quote>
-                            "מאז שקיבלנו את הספר, היא מבקשת שנקרא אותו כמעט כל ערב. היא ממש התרגשה לראות את עצמה בתוך
-                            הסיפור, והאיורים יצאו פשוט מקסימים!"
-                        </blockquote>
-                        <footer class="review-card__author">
-                            <div class="review-card__avatar" aria-hidden="true">
-                                <img src="tinytale-icon-logo.png" alt="" />
+            <div class="reviews-carousel swiper" data-reviews-carousel>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <article class="review-card review-card--has-media">
+                            <div class="review-card__media">
+                                <video class="review-card__video" data-review-video src="videos/book1.mp4"
+                                    poster="videos/book1-poster.jpg" muted loop playsinline preload="metadata"
+                                    controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture
+                                    disableremoteplayback aria-label="קטע מהספר המותאם אישית"></video>
                             </div>
-                            <span class="review-card__name" data-review-name>טניה כ, אמא של ג (בת 3)</span>
-                        </footer>
+                            <div class="review-card__body">
+                                <div class="review-card__stars" aria-label="דירוג 5 מתוך 5">
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                </div>
+                                <blockquote class="review-card__quote">
+                                    "מאז שקיבלנו את הספר, היא מבקשת שנקרא אותו כמעט כל ערב. היא ממש התרגשה לראות את
+                                    עצמה בתוך הסיפור, והאיורים יצאו פשוט מקסימים!"
+                                </blockquote>
+                                <footer class="review-card__author">
+                                    <div class="review-card__avatar" aria-hidden="true">
+                                        <img src="tinytale-icon-logo.png" alt="" />
+                                    </div>
+                                    <span class="review-card__name">טניה, אמא של גאיה (בת 3)</span>
+                                </footer>
+                            </div>
+                        </article>
                     </div>
-                </article>
-                <div class="reviews-nav" role="group" aria-label="ניווט בין ביקורות">
-                    <button class="reviews-nav__button" type="button" data-review-prev aria-label="ביקורת קודמת">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <path d="M7.5 4.5L13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.75"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <button class="reviews-nav__button" type="button" data-review-next aria-label="ביקורת הבאה">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <path d="M12.5 4.5L7 10l5.5 5.5" stroke="currentColor" stroke-width="1.75"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
+                    <div class="swiper-slide">
+                        <article class="review-card review-card--has-media">
+                            <div class="review-card__media">
+                                <video class="review-card__video" data-review-video src="videos/book2.mp4"
+                                    poster="videos/book2-poster.jpg" muted loop playsinline preload="metadata"
+                                    controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture
+                                    disableremoteplayback aria-label="קטע מהספר המותאם אישית"></video>
+                            </div>
+                            <div class="review-card__body">
+                                <div class="review-card__stars" aria-label="דירוג 5 מתוך 5">
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                </div>
+                                <blockquote class="review-card__quote">
+                                    "ואו תקשיבו רמה אחרת! ממש כמו ספר אמיתי"
+                                </blockquote>
+                                <footer class="review-card__author">
+                                    <div class="review-card__avatar" aria-hidden="true">
+                                        <img src="tinytale-icon-logo.png" alt="" />
+                                    </div>
+                                    <span class="review-card__name">אוריה ו, אבא של א (בת 4.5)</span>
+                                </footer>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="swiper-slide">
+                        <article class="review-card review-card--has-media">
+                            <div class="review-card__media">
+                                <video class="review-card__video" data-review-video src="videos/book3.mp4"
+                                    poster="videos/book3-poster.jpg" muted loop playsinline preload="metadata"
+                                    controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture
+                                    disableremoteplayback aria-label="קטע מהספר המותאם אישית"></video>
+                            </div>
+                            <div class="review-card__body">
+                                <div class="review-card__stars" aria-label="דירוג 5 מתוך 5">
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                    <span aria-hidden="true">★</span>
+                                </div>
+                                <blockquote class="review-card__quote">
+                                    "תקשיבו, היא פשוט עפה על הספר! בהתחלה היא לא הבינה איך היא נכנסה לתוך הסיפור ואז
+                                    עברה עמוד עמוד וחיפשה את עצמה בכל האיורים. כבר קראנו אותו איזה חמש פעמים!"
+                                </blockquote>
+                                <footer class="review-card__author">
+                                    <div class="review-card__avatar" aria-hidden="true">
+                                        <img src="tinytale-icon-logo.png" alt="" />
+                                    </div>
+                                    <span class="review-card__name">אושרית, אמא של עדי (בת 4)</span>
+                                </footer>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </section>
@@ -365,6 +413,7 @@
 
     <script type="module" src="books-picker.js"></script>
     <script src="magic-highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="reviews-carousel.js"></script>
     <script src="header.js"></script>
     <script src="legal-modal.js"></script>
