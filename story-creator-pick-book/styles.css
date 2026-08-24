@@ -528,12 +528,6 @@ html.is-embedded .books-picker .scroll-view {
   }
 }
 
-@media (min-width: 1400px) {
-  .books-picker {
-    --books-picker-cols: 4;
-  }
-}
-
 /* Standalone page loaded in an external iframe (height sync only). */
 html.is-embedded,
 html.is-embedded body {
