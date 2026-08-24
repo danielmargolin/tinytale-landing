@@ -12,9 +12,14 @@
   --books-picker-author: #6b7280;
   --books-picker-primary: #504df2;
   --books-picker-primary-shadow: rgba(80, 77, 242, 0.35);
-  --books-picker-gap: 16px;
+  /* Match PickBookMobileTablet: 12px grid gap, 2 columns on phone */
+  --books-picker-gap: 12px;
+  --books-picker-carousel-gap: 16px;
+  --books-picker-grid-row-gap: 3px;
   --books-picker-max-width: 700px;
   --books-picker-cols: 2;
+  --books-picker-cover-max-width: 100%;
+  --books-picker-featured-cover-width: auto;
   width: 100%;
   color: var(--books-picker-text);
   font-family: var(--books-picker-font);
@@ -96,7 +101,7 @@ body.books-picker-standalone .books-picker {
 }
 
 .books-picker .scroll-content {
-  margin: 16px;
+  margin: 8px;
   padding-bottom: 36px;
   display: flex;
   flex-direction: column;
@@ -245,7 +250,7 @@ html.is-embedded .books-picker .scroll-view {
 .books-picker .carousel-track {
   display: flex;
   flex-direction: row;
-  gap: var(--books-picker-gap);
+  gap: var(--books-picker-carousel-gap);
   overflow-x: auto;
   overflow-y: hidden;
   /* Keep auto so trackpad/touch stay native; arrows still use JS smooth scroll. */
@@ -341,19 +346,20 @@ html.is-embedded .books-picker .scroll-view {
   flex-wrap: wrap;
   align-items: flex-start;
   gap: var(--books-picker-gap);
-  row-gap: 3px;
+  row-gap: var(--books-picker-grid-row-gap);
   width: 100%;
 }
 
 .books-picker .cover {
   flex: 0 0 auto;
   flex-shrink: 0;
+  /* Match PickBookMobileTablet item width: ((100% - (cols-1)*12px) / cols) * coverScale */
   width: calc(
     ((100% - (var(--books-picker-cols) - 1) * var(--books-picker-gap)) /
       var(--books-picker-cols)) *
       var(--cover-scale, 1)
   );
-  max-width: 100%;
+  max-width: var(--books-picker-cover-max-width);
   margin-bottom: 16px;
   overflow: visible;
   text-decoration: none;
@@ -367,15 +373,17 @@ html.is-embedded .books-picker .scroll-view {
 .books-picker .cover-media {
   position: relative;
   width: 100%;
-  border-radius: 25px;
+  border-radius: 20px;
   overflow: hidden;
+  aspect-ratio: 1;
+  background: #e0e0e0;
 }
 
 .books-picker .cover-image {
   display: block;
   width: 100%;
-  min-height: 190px;
-  aspect-ratio: 155 / 190;
+  height: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 20px;
   background: #e0e0e0;
@@ -442,15 +450,87 @@ html.is-embedded .books-picker .scroll-view {
   line-height: 1.4;
 }
 
-@media (min-width: 768px) {
+/* Tablet — PickBookMobileTablet: 3 columns */
+@media (min-width: 768px) and (max-width: 1023px) {
   .books-picker {
-    --books-picker-cols: 4;
+    --books-picker-cols: 3;
   }
 }
 
-@media (max-width: 480px) {
+/*
+ * Desktop — PickBookDesktop:
+ * FEATURED_COVER_WIDTH = 240, GRID_COVER_MAX_WIDTH = 300,
+ * TEMPLATE_GAP = 20, columns = 3 (4 at ≥1400)
+ */
+@media (min-width: 1024px) {
+  .books-picker {
+    --books-picker-gap: 20px;
+    --books-picker-carousel-gap: 20px;
+    --books-picker-grid-row-gap: 28px;
+    --books-picker-cols: 3;
+    --books-picker-max-width: none;
+    --books-picker-cover-max-width: 300px;
+    --books-picker-featured-cover-width: 240px;
+  }
+
+  /* House carousel: same column formula × coverScale (0.9), capped at 240 —
+     so authors grid cells stay larger (PickBookDesktop: featured 240 < grid ≤300). */
+  .books-picker .carousel .cover {
+    max-width: var(--books-picker-featured-cover-width);
+  }
+
+  .books-picker .grid .cover {
+    width: calc(
+      (100% - (var(--books-picker-cols) - 1) * var(--books-picker-gap)) /
+        var(--books-picker-cols)
+    );
+    max-width: var(--books-picker-cover-max-width);
+  }
+
+  .books-picker .cover {
+    margin-bottom: 0;
+  }
+
+  .books-picker .cover-title-block {
+    margin-top: 12px;
+  }
+
+  .books-picker .cover-title {
+    font-size: 15px;
+    line-height: 20px;
+    color: #131313;
+  }
+
+  .books-picker .cover-author {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .books-picker .section {
+    gap: 18px;
+  }
+
+  .books-picker .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e2a4a;
+    letter-spacing: 0;
+  }
+
   .books-picker .scroll-content {
-    margin: 12px;
+    margin: 0;
+    padding: 30px 32px 40px;
+    gap: 34px;
+  }
+
+  .books-picker .perk-button {
+    padding: 9px 16px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .books-picker {
+    --books-picker-cols: 4;
   }
 }
 

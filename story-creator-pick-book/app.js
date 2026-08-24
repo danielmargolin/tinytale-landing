@@ -48,7 +48,9 @@ function formatTargetAgeRange(range) {
 async function fetchTemplates(url) {
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`Failed to load templates from ${url} (${response.status})`);
+    throw new Error(
+      `Failed to load templates from ${url} (${response.status})`,
+    );
   }
   const data = await response.json();
   return data.templates ?? [];
@@ -62,8 +64,7 @@ export async function initBooksPicker(root, options = {}) {
   if (!root) throw new Error("initBooksPicker: root element is required");
 
   const basePath = (options.basePath ?? "./").replace(/\/?$/, "/");
-  const mode =
-    options.mode ?? (isEmbeddedFrame() ? "iframe" : "standalone");
+  const mode = options.mode ?? (isEmbeddedFrame() ? "iframe" : "standalone");
   const openLinksInTop = mode === "iframe";
 
   const templatesLocalUrl = `${basePath}templates.json`;
@@ -72,7 +73,7 @@ export async function initBooksPicker(root, options = {}) {
     if (mode !== "iframe") return;
     window.parent.postMessage(
       { source: EMBED_MESSAGE_SOURCE, ...payload },
-      "*"
+      "*",
     );
   };
 
@@ -103,7 +104,10 @@ export async function initBooksPicker(root, options = {}) {
     throw new Error("Failed to load templates from all sources");
   }
 
-  function createCover(template, { showAuthorName = true, coverScale = 1 } = {}) {
+  function createCover(
+    template,
+    { showAuthorName = true, coverScale = 1 } = {},
+  ) {
     const link = document.createElement("a");
     link.className = "cover";
     link.href = bookPreviewUrl(template.id);
@@ -215,7 +219,7 @@ export async function initBooksPicker(root, options = {}) {
     fadeLeft,
     fadeRight,
     arrowLeft,
-    arrowRight
+    arrowRight,
   ) {
     const trackRect = track.getBoundingClientRect();
     let minLeft = trackRect.left;
@@ -238,7 +242,7 @@ export async function initBooksPicker(root, options = {}) {
 
   function createCarousel(
     templates,
-    { showAuthorName, coverScale, verticalScrollEl }
+    { showAuthorName, coverScale, verticalScrollEl },
   ) {
     const carousel = document.createElement("div");
     carousel.className = "carousel";
@@ -295,7 +299,7 @@ export async function initBooksPicker(root, options = {}) {
           if (event.button != null && event.button !== 0) return;
           scrollByPage(direction);
         },
-        true
+        true,
       );
     };
 
@@ -347,7 +351,7 @@ export async function initBooksPicker(root, options = {}) {
           event.preventDefault();
           scrollVerticalInstant(event.deltaY);
         },
-        { passive: false }
+        { passive: false },
       );
     }
 
@@ -366,7 +370,9 @@ export async function initBooksPicker(root, options = {}) {
     const grid = document.createElement("div");
     grid.className = "grid";
     for (const template of templates) {
-      grid.appendChild(createCover(template, { showAuthorName, coverScale: 1 }));
+      grid.appendChild(
+        createCover(template, { showAuthorName, coverScale: 1 }),
+      );
     }
     return grid;
   }
@@ -393,7 +399,7 @@ export async function initBooksPicker(root, options = {}) {
           showAuthorName,
           coverScale,
           verticalScrollEl,
-        })
+        }),
       );
     } else {
       section.appendChild(createGrid(templates, { showAuthorName }));
@@ -459,8 +465,7 @@ export async function initBooksPicker(root, options = {}) {
     return {
       sectionsEl: root.querySelector("#sections"),
       scrollView: null,
-      verticalScrollEl:
-        mode === "inline" ? document.documentElement : null,
+      verticalScrollEl: mode === "inline" ? document.documentElement : null,
     };
   }
 
@@ -483,7 +488,7 @@ export async function initBooksPicker(root, options = {}) {
       templates: tinyTale,
       showAuthorName: false,
       horizontal: true,
-      coverScale: 0.82,
+      coverScale: 0.85,
       accessory: createPerkButton(),
       verticalScrollEl,
     });
@@ -497,7 +502,7 @@ export async function initBooksPicker(root, options = {}) {
     });
 
     sectionsEl.replaceChildren(
-      ...[houseSection, authorsSection].filter(Boolean)
+      ...[houseSection, authorsSection].filter(Boolean),
     );
 
     if (scrollView) setupScrollFades(scrollView);
