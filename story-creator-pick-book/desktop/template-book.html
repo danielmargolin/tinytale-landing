@@ -541,7 +541,7 @@
     const backIconEl = document.getElementById("backIcon");
     const backLabelEl = document.getElementById("backLabel");
 
-    let ctaUrl = "https://tinytaleapp.com";
+    let ctaUrl = "https://tinytaleapp.com/?entrySource=marketing_cta";
     let layoutBound = false;
 
     function stringsFor(language) {
@@ -725,7 +725,7 @@
       const isHebrew = template.language === "he";
       const copy = applyLocale(isHebrew);
       document.title = template.title || copy.ctaLabel;
-      ctaUrl = `https://tinytaleapp.com/?preSelectedTemplateId=${encodeURIComponent(template.id)}`;
+      ctaUrl = `https://tinytaleapp.com/?preSelectedTemplateId=${encodeURIComponent(template.id)}&entrySource=marketing_cta`;
       setCover(template.cover_photo, template.title);
       renderContent(template, copy);
       showBook();

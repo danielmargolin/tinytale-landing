@@ -6,6 +6,8 @@
   };
   const DISTINCT_ID_PARAM = "phDistinctId";
   const SESSION_ID_PARAM = "phSessionId";
+  const ENTRY_SOURCE_PARAM = "entrySource";
+  const MARKETING_SOURCE = "marketing_cta";
 
   function isAppUrl(url) {
     return Boolean(APP_HOSTS[url.hostname]);
@@ -15,17 +17,20 @@
     try {
       const url = new URL(href, window.location.origin);
       if (!isAppUrl(url)) return href;
+
+      url.searchParams.set(ENTRY_SOURCE_PARAM, MARKETING_SOURCE);
+
       if (!window.posthog || typeof window.posthog.get_distinct_id !== "function") {
-        return href;
+        return url.toString();
       }
 
       const distinctId = window.posthog.get_distinct_id();
-      if (!distinctId) return href;
-
-      url.searchParams.set(DISTINCT_ID_PARAM, distinctId);
-      if (typeof window.posthog.get_session_id === "function") {
-        const sessionId = window.posthog.get_session_id();
-        if (sessionId) url.searchParams.set(SESSION_ID_PARAM, sessionId);
+      if (distinctId) {
+        url.searchParams.set(DISTINCT_ID_PARAM, distinctId);
+        if (typeof window.posthog.get_session_id === "function") {
+          const sessionId = window.posthog.get_session_id();
+          if (sessionId) url.searchParams.set(SESSION_ID_PARAM, sessionId);
+        }
       }
 
       if (typeof window.posthog.createPersonProfile === "function") {

@@ -940,7 +940,8 @@
       cta.textContent = isHe ? "התאימו את הספר" : "Personalize the book";
       const ctaUrl =
         "https://tinytaleapp.com/?preSelectedTemplateId=" +
-        encodeURIComponent(template.id);
+        encodeURIComponent(template.id) +
+        "&entrySource=marketing_cta";
       cta.addEventListener("click", () => {
         const url =
           typeof window.appendTinyTalePostHogIdentity === "function"
