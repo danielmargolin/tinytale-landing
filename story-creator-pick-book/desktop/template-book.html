@@ -468,7 +468,7 @@
 
     <div class="status is-visible" id="status">
       <p class="status-message" id="statusMessage">טוען את הספר…</p>
-      <a class="status-link" id="statusLink" href="../index.html" hidden>חזרה לרשימת הספרים</a>
+      <a class="status-link" id="statusLink" href="https://tinytale.co.il/" hidden>חזרה לדף הבית</a>
     </div>
 
     <div class="page-container" id="pageContainer">
@@ -501,7 +501,7 @@
       "https://tiny-tale-backend-production.up.railway.app/v1/templates?language=he";
     const FALLBACK_TEMPLATES_URL = "/api/templates";
     const FALLBACK_COVER_URL = "https://placehold.co/300x320.png";
-    const BACK_FALLBACK_URL = "../index.html";
+    const BACK_FALLBACK_URL = "https://tinytale.co.il/";
     const COPY = {
       he: {
         backLabel: "חזרה",
@@ -514,7 +514,7 @@
         missingId: "חסר מזהה תבנית.",
         notFound: "התבנית לא נמצאה.",
         fetchError: "לא ניתן לטעון את התבנית.",
-        backLink: "חזרה לרשימת הספרים",
+        backLink: "חזרה לדף הבית",
       },
       en: {
         backLabel: "Back",
@@ -527,7 +527,7 @@
         missingId: "Missing template id.",
         notFound: "Template not found.",
         fetchError: "Could not load the template.",
-        backLink: "Back to book list",
+        backLink: "Back to home",
       },
     };
 
@@ -549,11 +549,9 @@
     }
 
     function goBack() {
-      if (window.history.length > 1 && document.referrer) {
-        window.history.back();
-      } else {
-        window.location.href = BACK_FALLBACK_URL;
-      }
+      // Always return to the marketing home — history.back() can land on
+      // /story-creator-pick-book/ when that was the previous page.
+      window.location.href = BACK_FALLBACK_URL;
     }
 
     function showStatus(message, showLink) {

@@ -532,7 +532,7 @@
       "https://tiny-tale-backend-production.up.railway.app/v1/templates?language=he";
     const FALLBACK_TEMPLATES_URL = "/api/templates";
     const FALLBACK_COVER_URL = "https://placehold.co/300x320.png";
-    const BACK_FALLBACK_URL = "../index.html";
+    const BACK_FALLBACK_URL = "https://tinytale.co.il/";
 
     const statusEl = document.getElementById("status");
     const statusMessage = document.getElementById("statusMessage");
@@ -555,11 +555,9 @@
     }
 
     function goBack() {
-      if (window.history.length > 1 && document.referrer) {
-        window.history.back();
-      } else {
-        window.location.href = BACK_FALLBACK_URL;
-      }
+      // Always return to the marketing home — history.back() can land on
+      // /story-creator-pick-book/ when that was the previous page.
+      window.location.href = BACK_FALLBACK_URL;
     }
 
     document.getElementById("backBtn").addEventListener("click", goBack);
