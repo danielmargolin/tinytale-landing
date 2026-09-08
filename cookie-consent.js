@@ -9,15 +9,67 @@
   const ENTRY_SOURCE_PARAM = "entrySource";
   const MARKETING_SOURCE = "marketing_cta";
 
+  /**
+   * Campaign params worth carrying. They exist only on the URL the visitor
+   * arrived with, so they have to be relayed forward by hand.
+   */
+  const CAMPAIGN_PARAMS = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+    "fbclid",
+    "gclid",
+    "msclkid",
+    "ttclid",
+    "twclid",
+    "igshid",
+    "li_fat_id",
+  ];
+
   function isAppUrl(url) {
     return Boolean(APP_HOSTS[url.hostname]);
+  }
+
+  function isSameOriginUrl(url) {
+    return url.origin === window.location.origin;
+  }
+
+  /**
+   * Relays the campaign that brought this visitor onto an outgoing URL.
+   *
+   * The journey to the app is three hops — landing page, then a book preview on
+   * this domain, then tinytaleapp.com — and the campaign params only ever appear
+   * on the first one. Carrying them across same-origin links too keeps them alive
+   * through the middle hop, so the app still learns where the visit came from.
+   *
+   * Params already on the target are left alone, which also makes this idempotent.
+   */
+  function appendCampaign(url) {
+    const incoming = new URLSearchParams(window.location.search);
+
+    CAMPAIGN_PARAMS.forEach(function (name) {
+      const value = incoming.get(name);
+      if (value && value.trim() && !url.searchParams.has(name)) {
+        url.searchParams.set(name, value);
+      }
+    });
   }
 
   function appendIdentity(href) {
     try {
       const url = new URL(href, window.location.origin);
-      if (!isAppUrl(url)) return href;
 
+      // Campaign params ride along on internal links so they survive to the page
+      // that finally hands off to the app. Identity params are app-only.
+      if (!isAppUrl(url)) {
+        if (!isSameOriginUrl(url)) return href;
+        appendCampaign(url);
+        return url.toString();
+      }
+
+      appendCampaign(url);
       url.searchParams.set(ENTRY_SOURCE_PARAM, MARKETING_SOURCE);
 
       if (!window.posthog || typeof window.posthog.get_distinct_id !== "function") {
@@ -52,6 +104,13 @@
       if (!target || typeof target.closest !== "function") return;
       const anchor = target.closest("a[href]");
       if (!anchor) return;
+
+      // In-page jumps stay untouched: rewriting "#books-section-title" into a full
+      // URL turns a scroll into a navigation. mailto:/tel: are not navigations at all.
+      const rawHref = anchor.getAttribute("href") || "";
+      if (rawHref.startsWith("#")) return;
+      if (anchor.protocol !== "http:" && anchor.protocol !== "https:") return;
+
       const next = appendIdentity(anchor.href);
       if (next !== anchor.href) anchor.href = next;
     },
